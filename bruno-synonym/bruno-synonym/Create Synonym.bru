@@ -1,0 +1,18 @@
+meta {
+  name: Create Synonym
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/synonym
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "word": "Pompon",
+    "synonyms": ["happy"]
+  }
+}

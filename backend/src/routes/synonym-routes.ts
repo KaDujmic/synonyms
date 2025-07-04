@@ -5,9 +5,19 @@ import { callbackErrorHandler } from '../middleware';
 const router = express.Router();
 const synonymController = new SynonymController();
 
-// GET /synonym/:searchTerm
+// GET /synonym/:searchTerm/synonym
 router.get('/:searchTerm', callbackErrorHandler(async (req, res) => {
-  await synonymController.getSynonyms(req, res);
+  await synonymController.getSynonym(req, res);
+}));
+
+// GET /synonym/:searchTerm
+router.get('/search/:searchTerm/', callbackErrorHandler(async (req, res) => {
+  await synonymController.searchSynonyms(req, res);
+}));
+
+// GET /synonym/objects
+router.get('/:searchTerm/synonyms', callbackErrorHandler(async (req, res) => {
+  await synonymController.getSynonymObjects(req, res);
 }));
 
 // POST /synonym
