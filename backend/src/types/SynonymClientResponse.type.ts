@@ -1,7 +1,5 @@
-type Synonym = {
-	word: string;
-	link: string;
-}
+import { Synonym } from "./Synonym.type";
+
 
 export type SynonymClientResponse = {
 	word: string;
