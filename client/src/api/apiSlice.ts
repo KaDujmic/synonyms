@@ -3,6 +3,7 @@ import type { Synonym } from '../types/Synonym.type';
 import type { SynonymClientResponse } from '../types/SynonymClientResponse.type';
 import type { CreateSynonymRequest } from '../types/CreateSynonymRequest.type';
 import type { SearchSynonymResponse } from './types/SearchSynonymResponse.type';
+import type { GetSynonymResponse } from './types/GetSynonymResponse.type';
 
 // API Slice
 export const apiSlice = createApi({
@@ -14,7 +15,7 @@ export const apiSlice = createApi({
   tagTypes: ['Synonyms'],
   endpoints: (builder) => ({
     // GET /synonym/:searchTerm - Get synonyms for a specific word
-    getSynonym: builder.query<Synonym[], string>({
+    getSynonym: builder.query<GetSynonymResponse, string | undefined>({
       query: (searchTerm) => `/${searchTerm}`,
       providesTags: (result, error, searchTerm) => 
         result ? [{ type: 'Synonyms', id: searchTerm }] : []

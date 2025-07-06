@@ -1,0 +1,14 @@
+// Import global variables
+@import './variables.less';
+
+.card {
+  background-color: @bg-white;
+  border-radius: @border-radius;
+  box-shadow: @shadow-md;
+  padding: @spacing-lg;
+  transition: box-shadow 0.2s ease;
+
+  @media (max-width: @mobile-breakpoint) {
+    padding: @spacing-md;
+  }
+} 

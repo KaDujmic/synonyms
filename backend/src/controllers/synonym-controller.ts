@@ -33,8 +33,8 @@ export class SynonymController {
     return res.status(200).json({
       status: 'success',
       data: {
-        searchTerm,
-        synonym
+        word: searchTerm,
+        synonyms: synonym
       }
     });
   }

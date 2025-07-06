@@ -5,11 +5,11 @@ export const Layout = () => {
   return (
     <>
       <Header />
-      <div>
-        <main style={{ padding: '20px' }}>
+      <main>
+        <div className="main-container">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </main>
     </>
   );
 }; 
