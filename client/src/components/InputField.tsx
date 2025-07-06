@@ -15,6 +15,8 @@ interface InputFieldProps {
   minLength?: number;
   pattern?: string;
   title?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const InputField = (props: InputFieldProps) => {
@@ -32,7 +34,9 @@ export const InputField = (props: InputFieldProps) => {
     maxLength,
     minLength,
     pattern,
-    title
+    title,
+    onFocus,
+    onBlur
   } = props;
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +59,8 @@ export const InputField = (props: InputFieldProps) => {
       minLength={minLength}
       pattern={pattern}
       title={title}
+      onFocus={onFocus}
+      onBlur={onBlur}
     />
   );
 }; 
