@@ -1,12 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLazySearchSynonymsQuery } from "../../../api/apiSlice";
+import { useDebounce } from "../../../hooks/listeners/useDebounce";
 
 export const useHandleSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [focused, setFocused] = useState(false);
   const navigate = useNavigate();
   const [searchSynonyms, { data: synonyms, isLoading, isSuccess }] = useLazySearchSynonymsQuery();
+
+  const handleInput = (value: string) => {
+    if (value.trim()) {
+      searchSynonyms(value.trim());
+    }
+  };
+
+  const {
+    debounce: debounceRequest,
+  } = useDebounce(handleInput, 300, [searchSynonyms]);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
@@ -18,7 +29,7 @@ export const useHandleSearch = () => {
   const handleChange = (value: string) => {
     setSearchTerm(value);
     if (value.trim()) {
-      searchSynonyms(value.trim());
+      debounceRequest(value.trim());
     }
   };
 
