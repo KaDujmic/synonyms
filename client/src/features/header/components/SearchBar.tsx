@@ -15,7 +15,8 @@ export const SearchBar = () => {
     setFocused,
     handleChange,
     synonyms,
-    isSuccess
+    isSuccess,
+    isLoading
   } = useHandleSearch();
 
   return (
@@ -33,11 +34,13 @@ export const SearchBar = () => {
         <Button onClick={handleSearch} className="button-primary">
           Search
         </Button>
-        {isSuccess && synonyms && synonyms.data.synonyms.length > 0 && focused && (
+        {isSuccess && synonyms  && focused && (
           <SearchResults 
             setFocused={setFocused}
             results={synonyms?.data?.synonyms} 
             setSearchTerm={setSearchTerm} 
+            searchTerm={searchTerm}
+            isLoading={isLoading}
           />
         )}
       </ClickOutsideAwareComponent>
