@@ -1,0 +1,101 @@
+@import './variables.less';
+
+.button {
+  border-radius: @border-radius-sm;
+  border: 1px solid transparent;
+  padding: @spacing-sm @spacing-lg;
+  font-size: @font-size-base;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: @secondary-color;
+  color: @text-light;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: darken(@secondary-color, 10%);
+    border-color: darken(@secondary-color, 15%);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid @primary-color;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    background-color: darken(@secondary-color, 15%);
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: @disabled-color;
+    color: @text-secondary;
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &:hover {
+      background-color: @disabled-color;
+      border-color: transparent;
+      transform: none;
+    }
+  }
+
+  &-primary {
+    background-color: @primary-color;
+
+    &:hover {
+      background-color: darken(@primary-color, 10%);
+      border-color: darken(@primary-color, 15%);
+    }
+
+    &:active {
+      background-color: darken(@primary-color, 15%);
+    }
+  }
+
+  &-secondary {
+    background-color: @secondary-color;
+
+    &:hover {
+      background-color: darken(@secondary-color, 10%);
+      border-color: darken(@secondary-color, 15%);
+    }
+
+    &:active {
+      background-color: darken(@secondary-color, 15%);
+    }
+  }
+
+  &-outline {
+    background-color: transparent;
+    border-color: @secondary-color;
+    color: @secondary-color;
+
+    &:hover {
+      background-color: @secondary-color;
+      color: @text-light;
+    }
+
+    &:active {
+      background-color: darken(@secondary-color, 10%);
+    }
+  }
+
+  &-small {
+    padding: @spacing-xs @spacing-md;
+    font-size: @font-size-small;
+  }
+
+  &-large {
+    padding: @spacing-md @spacing-xl;
+    font-size: @font-size-large;
+  }
+
+  @media (min-width: @mobile-breakpoint) {
+    padding: @spacing-md @spacing-xl;
+    font-size: @font-size-large;
+  }
+}

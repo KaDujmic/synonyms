@@ -1,0 +1,67 @@
+// Import global variables
+@import '../../../styles/variables.less';
+
+.search-bar {
+  font-size: @font-size-base;
+  width: 100%;
+  display: flex;
+  border: 1px solid @disabled-color;
+  border-radius: @border-radius;
+  overflow: hidden;
+  min-width: 0;
+
+  &:focus-within {
+    border-color: @primary-color;
+  }
+
+  input {
+    padding: @spacing-sm;
+    border: none;
+    outline: none;
+    flex: 1;
+    border-top-left-radius: @border-radius;
+    border-bottom-left-radius: @border-radius;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: @font-size-base;
+    min-width: 0;
+
+    @media (min-width: @mobile-breakpoint) {
+      padding: @spacing-md;
+      font-size: @font-size-large;
+    }
+  }
+
+  button {
+    padding: @spacing-sm @spacing-lg;
+    background-color: @primary-color;
+    color: @text-light;
+    border: none;
+    cursor: pointer;
+    border-top-right-radius: @border-radius;
+    border-bottom-right-radius: @border-radius;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: @font-size-base;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: darken(@primary-color, 10%);
+    }
+
+    &:active {
+      background-color: darken(@primary-color, 15%);
+    }
+
+    @media (min-width: @mobile-breakpoint) {
+      padding: @spacing-md @spacing-lg;
+      font-size: @font-size-large;
+    }
+  }
+
+  @media (min-width: @mobile-breakpoint) {
+    font-size: @font-size-large;
+    max-width: 600px;
+  }
+} 

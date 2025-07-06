@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { BadRequestError } from '../errors';
+import { BadRequestError, NotFoundError } from '../errors';
 import synonymService from '../services/synonym-service';
 
 export class SynonymController {
@@ -25,6 +25,10 @@ export class SynonymController {
     const { searchTerm } = req.params;
     
     const synonym = synonymService.getSynonym(searchTerm);
+
+    if (!synonym) {
+      throw new NotFoundError('Synonym not found');
+    }
     
     return res.status(200).json({
       status: 'success',
@@ -39,6 +43,10 @@ export class SynonymController {
     const { searchTerm } = req.params;
     
     const synonymObjects = synonymService.getSynonymObjects(searchTerm);
+
+    if (!synonymObjects) {
+      throw new NotFoundError('Synonym not found');
+    }
     
     return res.status(200).json({
       status: 'success',

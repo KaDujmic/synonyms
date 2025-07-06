@@ -1,0 +1,71 @@
+// Import global variables
+@import '../../../styles/variables.less';
+
+.header {
+  height: @header-height;
+  background-color: @bg-white;
+  box-shadow: @shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 @spacing-lg;
+
+  @media (max-width: @mobile-breakpoint) {
+    padding: 0 @spacing-md;
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: @spacing-sm;
+    flex-shrink: 0;
+    position: relative;
+
+    @media (min-width: @mobile-breakpoint) {
+      position: absolute;
+    }
+
+    img {
+      cursor: pointer;
+    }
+
+    h2 {
+      display: none;
+      margin: 0;
+      font-size: @font-size-xl;
+      font-weight: bold;
+      color: @primary-color;
+
+      @media (min-width: @tablet-breakpoint) {
+        display: block;
+      }
+    }
+
+    .logo {
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+
+      @media (min-width: @mobile-breakpoint) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  // Search bar container - centered on desktop, right-aligned on mobile
+  .search-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 @spacing-lg;
+    min-width: 0;
+
+    @media (max-width: @mobile-breakpoint) {
+      justify-content: flex-end;
+      margin: 0 0 0 @spacing-sm;
+    }
+  }
+}

@@ -110,6 +110,7 @@ class SynonymService {
 	// I decided that storing the word is less important than searching
 	// Assuming if this was a prod setting, we would seed the data on intial deploy
 	// And add words later on if some are missed
+
   /**
    * Adds synonyms for a given word
    * Automatically links all synonyms bi-directionally
@@ -142,8 +143,6 @@ class SynonymService {
         }
       }
     }
-
-    console.log(this.synonyms);
   }
 
     /**
@@ -172,12 +171,12 @@ class SynonymService {
    * @param slug - The word to get synonyms for
    * @returns An array of synonym objects with words and slugs
    */
-  public getSynonym(slug: string): Synonym[] {
+  public getSynonym(slug: string): Synonym[] | null {
     const normalized = slug.toLowerCase();
     const result = this.synonyms.get(normalized);
     
     if (!result) {
-      return [];
+      return null;
     }
     
     return Array.from(result).map(synonym => ({
@@ -192,12 +191,12 @@ class SynonymService {
    * @param word - The word to get synonyms for
    * @returns Array of synonym objects with words and slugs
    */
-  private getSynonymsForWord(word: string): Synonym[] {
+  private getSynonymsForWord(word: string): Synonym[] | null {
     const normalized = word.toLowerCase();
     const result = this.synonyms.get(normalized);
     
     if (!result) {
-      return [];
+      return null;
     }
     
     return Array.from(result).map(synonym => ({
@@ -207,25 +206,30 @@ class SynonymService {
   }
 
 
-	/**
- * Retrieves synonym objects for a single word
- * 
- * @param searchTerm - The word to get synonyms for
- * @returns Object containing word and its synonyms with slugs
- */
-public getSynonymObjects(searchTerm: string): SynonymClientResponse {
-	const synonyms = this.getSynonym(searchTerm);
-	const synonymObjects = synonyms.map(synonym => ({
-		word: synonym.word,
-		slug: synonym.slug,
-		synonyms: this.getSynonymsForWord(synonym.slug)
-	}));
-	
-	return {
-		word: searchTerm,
-		synonyms: synonymObjects
-	};
-}
+  /**
+   * Retrieves synonym objects for a single word
+   * 
+   * @param searchTerm - The word to get synonyms for
+   * @returns Object containing word and its synonyms with slugs
+   */
+  public getSynonymObjects(searchTerm: string): SynonymClientResponse | null {
+    const synonyms = this.getSynonym(searchTerm);
+
+    if (!synonyms) {
+      return null;
+    }
+
+    const synonymObjects = synonyms.map(synonym => ({
+      word: synonym.word,
+      slug: synonym.slug,
+      synonyms: this.getSynonymsForWord(synonym.slug)
+    }));
+    
+    return {
+      word: searchTerm,
+      synonyms: synonymObjects
+    };
+  }
 }
 
 export default new SynonymService();

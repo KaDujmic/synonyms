@@ -1,0 +1,77 @@
+@import './variables.less';
+
+.input-field {
+  padding: @spacing-sm;
+  border: 1px solid @disabled-color;
+  border-radius: @border-radius-sm;
+  font-size: @font-size-base;
+  font-family: inherit;
+  background-color: @bg-white;
+  color: @text-primary;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+  outline: none;
+
+  &::placeholder {
+    color: @text-secondary;
+    opacity: 0.7;
+  }
+
+  &:focus {
+    border-color: @primary-color;
+    box-shadow: 0 0 0 2px fade(@primary-color, 20%);
+  }
+
+  &:hover:not(:focus):not(:disabled) {
+    border-color: darken(@disabled-color, 10%);
+  }
+
+  &:disabled {
+    background-color: @bg-light;
+    color: @text-secondary;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:invalid {
+    border-color: #dc3545;
+    
+    &:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 2px fade(#dc3545, 20%);
+    }
+  }
+
+  // Input sizes
+  &-small {
+    padding: @spacing-xs @spacing-sm;
+    font-size: @font-size-small;
+  }
+
+  &-large {
+    padding: @spacing-md @spacing-lg;
+    font-size: @font-size-large;
+  }
+
+  // Input variants
+  &-outline {
+    background-color: transparent;
+    border-width: 2px;
+  }
+
+  &-filled {
+    background-color: @bg-light;
+    border-color: transparent;
+    
+    &:focus {
+      background-color: @bg-white;
+      border-color: @primary-color;
+    }
+  }
+
+  // Responsive adjustments
+  @media (min-width: @mobile-breakpoint) {
+    padding: @spacing-md;
+    font-size: @font-size-large;
+  }
+} 
