@@ -205,6 +205,39 @@ class SynonymService {
     }));
   }
 
+  /**
+   * Searches for synonyms that are not already present for a given word
+   * 
+   * @param word - The word to check against
+   * @param searchTerm - The search term to find potential synonyms
+   * @returns Array of synonym objects that are not already synonyms of the word
+   */
+  public searchAvailableSynonyms(word: string, searchTerm: string): Synonym[] {
+    const normalizedWord = word.toLowerCase();
+    const normalizedSearchTerm = searchTerm.toLowerCase();
+    
+    // Get existing synonyms for the word
+    const existingSynonyms = this.synonyms.get(normalizedWord) || new Set();
+    
+    // Search for all words that match the search term
+    const matchingWords = Array.from(this.caseMapping.entries())
+      .filter(([lowercaseWord, originalWord]) => 
+        lowercaseWord.startsWith(normalizedSearchTerm) && 
+        lowercaseWord !== normalizedWord
+      )
+      .map(([lowercaseWord, originalWord]) => ({
+        word: originalWord,
+        slug: lowercaseWord
+      }));
+
+    // Filter out words that are already synonyms of the given word
+    const availableSynonyms = matchingWords.filter(synonym => 
+      !existingSynonyms.has(synonym.slug)
+    );
+
+    return availableSynonyms;
+  }
+
 
   /**
    * Retrieves synonym objects for a single word

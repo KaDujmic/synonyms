@@ -25,4 +25,14 @@ router.post('', callbackErrorHandler(async (req, res) => {
   await synonymController.createSynonym(req, res);
 }));
 
+// POST /synonym/:word/add - Add synonyms to an existing word
+router.post('/:word/add', callbackErrorHandler(async (req, res) => {
+  await synonymController.addSynonymsToWord(req, res);
+}));
+
+// GET /synonym/:word/available/:searchTerm - Search for available synonyms for a word
+router.get('/:word/available/:searchTerm', callbackErrorHandler(async (req, res) => {
+  await synonymController.searchAvailableSynonyms(req, res);
+}));
+
 export default router;

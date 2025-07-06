@@ -1,5 +1,6 @@
 // Import global variables
 @import '../../../styles/variables.less';
+@import '../../../styles/animations.less';
 
 .search-bar {
 	position: relative;
@@ -100,28 +101,4 @@
 	}
 } 
 
-@keyframes expandFromTop {
-  from {
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    max-height: 200px;
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes collapseToTop {
-  from {
-    max-height: 600px;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}

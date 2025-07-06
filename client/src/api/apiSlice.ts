@@ -46,13 +46,42 @@ export const apiSlice = createApi({
     }),
 
     // POST /synonym - Create new synonyms
-    createSynonym: builder.mutation<{ word: string; synonyms: string[] }, CreateSynonymRequest>({
+    createSynonym: builder.mutation<GetSynonymResponse, CreateSynonymRequest>({
       query: (body) => ({
         url: '',
         method: 'POST',
         body
       }),
       invalidatesTags: ['Synonyms']
+    }),
+
+    // POST /synonym/:word/add - Add synonyms to an existing word
+    addSynonymsToWord: builder.mutation<{ word: string; synonyms: string[] }, { word: string; synonyms: string[] }>({
+      query: ({ word, synonyms }) => ({
+        url: `/${word}/add`,
+        method: 'POST',
+        body: { synonyms }
+      }),
+      invalidatesTags: (result, error, { word }) => [{ type: 'Synonyms', id: word }],
+      async onQueryStarted({ word, synonyms }, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          
+          // Import and use the cache update hook
+          const { updateSynonymCache } = await import('./hooks/useUpdateSynonymCache');
+          dispatch(updateSynonymCache(word, response.data.synonyms));
+        } catch (error) {
+          // Handle error if needed
+          console.error('Failed to update getSynonym cache:', error);
+        }
+      }
+    }),
+
+    // GET /synonym/:word/available/:searchTerm - Search for available synonyms for a word
+    searchAvailableSynonyms: builder.query<SearchSynonymResponse, { word: string; searchTerm: string }>({
+      query: ({ word, searchTerm }) => `/${word}/available/${searchTerm}`,
+      providesTags: (result, error, { word, searchTerm }) => 
+        result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
     })
   })
 });
@@ -64,5 +93,8 @@ export const {
   useLazySearchSynonymsQuery,
   useGetSynonymObjectsQuery,
   useFindSimilarWordsQuery,
-  useCreateSynonymMutation
+  useCreateSynonymMutation,
+  useAddSynonymsToWordMutation,
+  useSearchAvailableSynonymsQuery,
+  useLazySearchAvailableSynonymsQuery
 } = apiSlice;

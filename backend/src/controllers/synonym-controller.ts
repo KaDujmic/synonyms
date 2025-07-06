@@ -75,4 +75,48 @@ export class SynonymController {
       }
     });
   }
+
+  async addSynonymsToWord(req: Request, res: Response): Promise<Response> {
+    const { word } = req.params;
+    const { synonyms } = req.body;
+    
+    if (!word || word.trim() === '') {
+      throw new BadRequestError('Word parameter is required');
+    }
+    
+    if (!synonyms || !Array.isArray(synonyms) || synonyms.length === 0) {
+      throw new BadRequestError('Synonyms array is required and must not be empty');
+    }
+    
+    synonymService.addSynonyms(word, synonyms);
+    
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        word,
+        synonyms
+      }
+    });
+  }
+
+  async searchAvailableSynonyms(req: Request, res: Response): Promise<Response> {
+    const { word, searchTerm } = req.params;
+    
+    if (!word || word.trim() === '') {
+      throw new BadRequestError('Word parameter is required');
+    }
+    
+    if (!searchTerm || searchTerm.trim() === '') {
+      throw new BadRequestError('Search term is required');
+    }
+    
+    const availableSynonyms = synonymService.searchAvailableSynonyms(word, searchTerm);
+    
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        synonyms: availableSynonyms
+      }
+    });
+  }
 }
