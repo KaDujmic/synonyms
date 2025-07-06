@@ -48,7 +48,9 @@ export const useAddSynonym = () => {
       setIsAdding(false);
       setNewSynonym('');
       if (params.searchTerm) {
-        addSynonyms({ word: params.searchTerm, synonyms: [newSynonym] });
+        addSynonyms({ 
+          word: params.searchTerm, 
+          synonyms: [newSynonym] });
       }
     }
   };

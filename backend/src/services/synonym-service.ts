@@ -119,7 +119,17 @@ class SynonymService {
    * @param synonyms - The synonyms to add for the word
    */
   public addSynonyms(word: string, synonyms: string[]): void {
-    const allWords = [word, ...synonyms];
+    const normalizedWord = word.toLowerCase();
+    
+    // Get all existing synonyms for the word
+    const existingSynonyms = this.synonyms.get(normalizedWord) || new Set();
+    const existingSynonymsArray = Array.from(existingSynonyms);
+    
+    // Combine existing synonyms with new synonyms
+    const allSynonyms = [...existingSynonymsArray, ...synonyms];
+    
+    // Create the complete list of all words (original word + all synonyms)
+    const allWords = [word, ...allSynonyms];
     
     // Store original case mapping and normalize for internal operations
     const normalizedWords = allWords.map(w => {

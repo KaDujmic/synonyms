@@ -22,8 +22,6 @@ export const SynonymPage = () => {
     isFocused,
     setIsFocused
   } = useAddSynonym();
-
-  console.log('synonym', synonym?.data?.synonyms);
   
   return (
     <div className="synonym">
