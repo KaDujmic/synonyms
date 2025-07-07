@@ -1,6 +1,7 @@
 // This would be a file like a Repository in a real world application I assume
 import { Synonym } from "../types/Synonym.type";
 import { SynonymClientResponse } from "../types/SynonymClientResponse.type";
+import { dummySynonymsData } from "../data/dummy-synonyms";
 
 type SynonymMap = Map<string, Set<string>>;
 
@@ -20,84 +21,7 @@ class SynonymService {
    * Initializes the service with dummy data for testing
    */
   private initializeDummyData(): void {
-    const dummyData = [
-      // Happy - joyful
-      { word: "happy", synonyms: ["joyful", "cheerful", "glad"] }, // pleased
-      
-      // Big - large
-      { word: "big", synonyms: ["large", "huge", "enormous"] }, // massive
-      
-      // Small - tiny
-      { word: "small", synonyms: ["tiny", "little"] }, // miniature, petite
-      
-      // Fast - quick
-      { word: "fast", synonyms: ["quick", "rapid"] }, // swift, speedy
-      
-      // Slow - sluggish
-      { word: "slow", synonyms: ["sluggish", "leisurely"] }, // gradual
-      
-      // Beautiful - pretty
-      { word: "beautiful", synonyms: ["pretty", "gorgeous"] }, // stunning, lovely
-      
-      // Ugly - hideous
-      { word: "ugly", synonyms: ["hideous", "repulsive"] }, // unsightly
-      
-      // Smart - intelligent
-      { word: "smart", synonyms: ["intelligent", "clever"] }, // bright, wise
-      
-      // Stupid - foolish
-      { word: "stupid", synonyms: ["foolish", "dumb"] }, // ignorant
-      
-      // Strong - powerful
-      { word: "strong", synonyms: ["powerful", "mighty"] }, // robust, sturdy
-      
-      // Weak - feeble
-      { word: "weak", synonyms: ["feeble", "frail"] }, // delicate
-      
-      // Hot - warm
-      { word: "hot", synonyms: ["warm", "heated"] }, // scorching
-      
-      // Cold - chilly
-      { word: "cold", synonyms: ["chilly", "freezing"] }, // frigid
-      
-      // Good - excellent
-      { word: "good", synonyms: ["excellent", "great"] }, // wonderful, fantastic
-      
-      // Bad - terrible
-      { word: "bad", synonyms: ["terrible", "awful"] }, // horrible, dreadful
-      
-      // New - fresh
-      { word: "new", synonyms: ["fresh", "recent"] }, // modern
-      
-      // Old - ancient
-      { word: "old", synonyms: ["ancient", "aged"] }, // elderly
-      
-      // Clean - spotless
-      { word: "clean", synonyms: ["spotless", "pristine"] }, // immaculate
-      
-      // Dirty - filthy
-      { word: "dirty", synonyms: ["filthy", "soiled"] }, // grimy
-      
-      // Loud - noisy
-      { word: "loud", synonyms: ["noisy", "boisterous"] }, // clamorous
-      
-      // Quiet - silent
-      { word: "quiet", synonyms: ["silent", "hushed"] }, // peaceful
-      
-      // Bright - luminous
-      { word: "bright", synonyms: ["luminous", "radiant"] }, // brilliant
-      
-      // Dark - gloomy
-      { word: "dark", synonyms: ["gloomy", "dim"] }, // shadowy
-      
-      // Soft - gentle
-      { word: "soft", synonyms: ["gentle", "tender"] }, // mild
-      
-      // Hard - solid
-      { word: "hard", synonyms: ["solid", "firm", "rigid"] } // stiff
-    ];
-
-    dummyData.forEach(({ word, synonyms }) => {
+    dummySynonymsData.forEach(({ word, synonyms }) => {
       this.addSynonyms(word, synonyms);
     });
   }
@@ -169,7 +93,9 @@ class SynonymService {
 			.filter(([lowercaseWord]) => lowercaseWord.startsWith(normalizedPrefix))
 			.map(([lowercaseWord, originalWord]) => ({
 				word: originalWord,
-				slug: lowercaseWord
+				slug: lowercaseWord,
+        // Could be done maybe with only this.synonyms but i want to return the original word
+        synonyms: Array.from(this.synonyms.get(lowercaseWord) || []).map(synonym => this.caseMapping.get(synonym) || synonym)
 			}));
     
     return results;
@@ -211,7 +137,8 @@ class SynonymService {
     
     return Array.from(result).map(synonym => ({
       word: this.caseMapping.get(synonym) || synonym,
-      slug: synonym
+      slug: synonym,
+      synonyms: this.synonyms.get(synonym)
     }));
   }
 

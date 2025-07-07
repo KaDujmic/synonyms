@@ -2,7 +2,7 @@
 import '../styles/search-bar.less';
 import { Button } from '../../../components/Button';
 import { InputField } from '../../../components/InputField';
-import { ClickOutsideAwareComponent } from '../../clickOutsideAwareComponent/components/ClickOutsideAwareComponent';
+import { ClickOutsideAwareComponent } from '../../ClickOutsideAwareComponent/components/ClickOutsideAwareComponent';
 import { useHandleSearch } from '../hooks/useHandleSearch';
 import { SearchResults } from './SearchResults';
 

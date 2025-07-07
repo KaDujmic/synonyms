@@ -3,7 +3,7 @@
 @import './styles/input-field.less';
 @import './styles/card.less';
 @import './styles/loading-skeleton.less';
-
+@import './styles/marquee-component.less';
 
 main {
     display: flex;
@@ -15,8 +15,12 @@ main {
     width: 80%;
     padding-top: 20px;
 
-    @media (min-width: @tablet-breakpoint) {
+    @media (min-width: @mobile-breakpoint) {
         max-width: 40vw;
+    }
+
+    @media (min-width: @desktop-breakpoint) {
+        max-width: 30vw;
     }
 
 }

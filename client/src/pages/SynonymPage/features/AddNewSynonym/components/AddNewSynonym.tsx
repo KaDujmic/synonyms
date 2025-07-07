@@ -1,5 +1,5 @@
 import { Button } from "../../../../../components/Button"
-import { ClickOutsideAwareComponent } from "../../../../../features/clickOutsideAwareComponent/components/ClickOutsideAwareComponent"
+import { ClickOutsideAwareComponent } from "../../../../../features/ClickOutsideAwareComponent/components/ClickOutsideAwareComponent"
 import { InputField } from "../../../../../components/InputField"
 import type { Synonym } from "../../../../../types/Synonym.type";
 

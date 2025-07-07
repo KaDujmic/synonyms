@@ -78,11 +78,17 @@ export const apiSlice = createApi({
     }),
 
     // GET /synonym/:word/available/:searchTerm - Search for available synonyms for a word
-    searchAvailableSynonyms: builder.query<SearchSynonymResponse, { word: string; searchTerm: string }>({
-      query: ({ word, searchTerm }) => `/${word}/available/${searchTerm}`,
-      providesTags: (result, _, { word, searchTerm }) => 
-        result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
-    })
+    searchAvailableSynonyms: builder.query<SearchSynonymResponse, { word?: string; searchTerm: string }>({
+        query: ({ word, searchTerm }) => {
+          // If word is empty or undefined, use the general search endpoint
+          if (!word || word.trim() === '') {
+            return `/search/${searchTerm}`;
+          }
+          return `/${word}/available/${searchTerm}`;
+        },
+        providesTags: (result, _, { word, searchTerm }) => 
+          result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
+    }),
   })
 });
 

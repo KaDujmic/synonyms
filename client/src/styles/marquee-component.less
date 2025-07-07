@@ -1,0 +1,19 @@
+@import './variables.less';
+@import './animations.less';
+
+.marquee-component {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-component__inner {
+  display: inline-block;
+  padding-left: 100%;
+  width: 100%;
+}
+
+.marquee-component__inner.animate {
+  animation: scrollLeft 10s linear infinite;
+}
