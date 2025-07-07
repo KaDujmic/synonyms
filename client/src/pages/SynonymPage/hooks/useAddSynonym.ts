@@ -14,7 +14,8 @@ export const useAddSynonym = () => {
   const handleInput = (value: string) => {
     if (value.trim()) {
       if (params.searchTerm) {
-        searchSynonyms({ word: params.searchTerm, searchTerm: value.trim() });
+        // SEE AddNewSynonym.tsx line 40-42
+        // searchSynonyms({ word: params.searchTerm, searchTerm: value.trim() });
       }
     }
   };

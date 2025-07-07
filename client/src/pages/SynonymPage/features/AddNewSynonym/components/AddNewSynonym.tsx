@@ -16,12 +16,12 @@ interface AddNewSynonymProps {
 export const AddNewSynonym = (props: AddNewSynonymProps) => {
     const {
         newSynonym,
-        searchResults,
+        // searchResults,
         setIsFocused,
         handleInputChange,
         handleSave,
         handleCancel,
-        isFocused,
+        // isFocused,
     } = props;
 
     return (
@@ -37,7 +37,10 @@ export const AddNewSynonym = (props: AddNewSynonymProps) => {
 							autoFocus
 							onFocus={() => setIsFocused(true)}
 						/>
-						{newSynonym.length > 0 && searchResults.length > 0 && isFocused && (
+						{/* AT FIRST i tought about a dropdown but i think it's not necessary since if we add synonym possibly the word does not exist
+							if it does exist, it was already added to the that word/synonym
+						*/}
+						{/* {newSynonym.length > 0 && searchResults.length > 0 && isFocused && (
 							<div className="synonym-card__synonyms-suggestions">
 								{searchResults.map((result) => (
 									<div
@@ -49,7 +52,7 @@ export const AddNewSynonym = (props: AddNewSynonymProps) => {
 									</div>
 								))}
 							</div>
-						)}
+						)} */}
 					</ClickOutsideAwareComponent>
 					<div className="synonym-card__synonyms-actions">
 						<Button onClick={handleSave} className="button-primary">

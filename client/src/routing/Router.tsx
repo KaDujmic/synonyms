@@ -1,12 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { HomePage } from '../pages/HomePage';
+import { SynonymPage } from '../pages/SynonymPage/SynonymPage';
+import { SearchSynonymsPage } from '../pages/SearchSynonymsPage';
+import { SynonymObjectsPage } from '../pages/SynonymObjectsPage';
+import { CreateSynonymPage } from '../pages/CreateSynonymPage';
 import { Layout } from '../features/layout/components/Layout';
-import { 
-    HomePage,
-    SynonymPage,
-    SearchSynonymsPage,
-    SynonymObjectsPage,
-    CreateSynonymPage
-} from '../pages';
 
 export const router = createBrowserRouter([
   {

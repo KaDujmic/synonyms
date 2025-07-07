@@ -5,10 +5,11 @@ import { useAddSynonym } from './hooks/useAddSynonym';
 import './styles/synonym-page.less';
 import { AddNewSynonym } from './features/AddNewSynonym/components/AddNewSynonym';
 import { SynonymCard } from './components/SynonymCard';
+import { SynonymCardLoader } from './components/SynonymCardLoader';
 
 export const SynonymPage = () => {
   const { searchTerm } = useParams();
-  const { data: synonym } = useGetSynonymQuery(searchTerm);
+  const { data: synonym, isLoading } = useGetSynonymQuery(searchTerm);
   const {
     isAdding,
     newSynonym,
@@ -20,6 +21,10 @@ export const SynonymPage = () => {
     isFocused,
     setIsFocused
   } = useAddSynonym();
+
+  if (isLoading) {
+    return <SynonymCardLoader />;
+  }
   
   return (
     <div className="synonym">
