@@ -15,13 +15,13 @@ interface AddNewSynonymProps {
 
 export const AddNewSynonym = (props: AddNewSynonymProps) => {
     const {
-        newSynonym,
-        // searchResults,
-        setIsFocused,
-        handleInputChange,
-        handleSave,
-        handleCancel,
-        // isFocused,
+			newSynonym,
+			// searchResults,
+			setIsFocused,
+			handleInputChange,
+			handleSave,
+			handleCancel,
+			// isFocused,
     } = props;
 
     return (

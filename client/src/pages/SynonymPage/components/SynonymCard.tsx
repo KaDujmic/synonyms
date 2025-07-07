@@ -1,11 +1,13 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import type { Synonym } from "../../../types/Synonym.type";
+import { LoadingSkeleton } from '../../../components/LoadingSkeleton';
 
 interface SynonymCardProps {
     searchTerm?: string;
     synonyms: Synonym[];
     isAdding: boolean;
     handleAddClick: () => void;
+    isLoadingAddSynonym: boolean;
 }
 
 export const SynonymCard = (props: SynonymCardProps) => {
@@ -14,6 +16,7 @@ export const SynonymCard = (props: SynonymCardProps) => {
         synonyms,
         isAdding,
         handleAddClick,
+        isLoadingAddSynonym,
     } = props;
     return (
 			<>
@@ -33,6 +36,9 @@ export const SynonymCard = (props: SynonymCardProps) => {
 							{synonym.word}
 						</div>
 					))}
+					{isLoadingAddSynonym && (
+						<LoadingSkeleton width="100%" height="32px" variant="gray" />
+					)}
 					{!isAdding && (
 						<div className="synonym-card__synonyms-add" onClick={handleAddClick}>
 							<AddCircleOutlineOutlinedIcon />

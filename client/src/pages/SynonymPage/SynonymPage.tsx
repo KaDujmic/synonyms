@@ -19,7 +19,8 @@ export const SynonymPage = () => {
     handleInputChange,
     handleSave,
     isFocused,
-    setIsFocused
+    setIsFocused,
+    isLoading: isLoadingAddSynonym,
   } = useAddSynonym();
 
   if (isLoading) {
@@ -34,6 +35,7 @@ export const SynonymPage = () => {
           synonyms={synonym?.data?.synonyms || []}
           isAdding={isAdding}
           handleAddClick={handleAddClick}
+          isLoadingAddSynonym={isLoadingAddSynonym}
         />
         {isAdding && (
           <AddNewSynonym
