@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 interface LoadingSkeletonProps {
   width?: string;
   height?: string;

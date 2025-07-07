@@ -17,21 +17,21 @@ export const apiSlice = createApi({
     // GET /synonym/:searchTerm - Get synonyms for a specific word
     getSynonym: builder.query<GetSynonymResponse, string | undefined>({
       query: (searchTerm) => `/${searchTerm}`,
-      providesTags: (result, error, searchTerm) => 
+      providesTags: (result, _, searchTerm) => 
         result ? [{ type: 'Synonyms', id: searchTerm }] : []
     }),
 
     // GET /synonym/search/:searchTerm - Search synonyms starting with prefix
     searchSynonyms: builder.query<SearchSynonymResponse, string>({
       query: (searchTerm) => `/search/${searchTerm}`,
-      providesTags: (result, error, searchTerm) => 
+      providesTags: (result, _, searchTerm) => 
         result ? [{ type: 'Synonyms', id: `search-${searchTerm}` }] : []
     }),
 
     // GET /synonym/:searchTerm/synonyms - Get synonym objects with nested synonyms
     getSynonymObjects: builder.query<SynonymClientResponse, string>({
       query: (searchTerm) => `/${searchTerm}/synonyms`,
-      providesTags: (result, error, searchTerm) => 
+      providesTags: (result, _, searchTerm) => 
         result ? [{ type: 'Synonyms', id: `objects-${searchTerm}` }] : []
     }),
 
@@ -41,7 +41,7 @@ export const apiSlice = createApi({
         url: `/${searchTerm}/similar`,
         params: { maxResults }
       }),
-      providesTags: (result, error, { searchTerm }) => 
+      providesTags: (result, _, { searchTerm }) => 
         result ? [{ type: 'Synonyms', id: `similar-${searchTerm}` }] : []
     }),
 
@@ -62,8 +62,8 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { synonyms }
       }),
-      invalidatesTags: (result, error, { word }) => [{ type: 'Synonyms', id: word }],
-      async onQueryStarted({ word, synonyms }, { dispatch, queryFulfilled }) {
+      invalidatesTags: (_, __, { word }) => [{ type: 'Synonyms', id: word }],
+      async onQueryStarted({ word }, { dispatch, queryFulfilled }) {
         try {
           const response = await queryFulfilled;
           
@@ -71,7 +71,7 @@ export const apiSlice = createApi({
           const { updateSynonymCache } = await import('./hooks/useUpdateSynonymCache');
           dispatch(updateSynonymCache(word, response.data.synonyms));
         } catch (error) {
-          // Handle error if needed
+          // Handle error implementation
           console.error('Failed to update getSynonym cache:', error);
         }
       }
@@ -80,7 +80,7 @@ export const apiSlice = createApi({
     // GET /synonym/:word/available/:searchTerm - Search for available synonyms for a word
     searchAvailableSynonyms: builder.query<SearchSynonymResponse, { word: string; searchTerm: string }>({
       query: ({ word, searchTerm }) => `/${word}/available/${searchTerm}`,
-      providesTags: (result, error, { word, searchTerm }) => 
+      providesTags: (result, _, { word, searchTerm }) => 
         result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
     })
   })
