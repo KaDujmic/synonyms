@@ -1,0 +1,56 @@
+// Import global variables
+@import './variables.less';
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -1220px 0;
+  }
+  100% {
+    background-position: 1220px 0;
+  }
+}
+
+.loading-skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: @border-radius-sm;
+  background: @bg-white;
+
+  &__shimmer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1220px;
+    overflow: hidden;
+    height: 100%;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeholderShimmer;
+    animation-timing-function: linear;
+    background-size: 1920px 104px;
+    will-change: background-position;
+  }
+
+  &--gray {
+    .loading-skeleton__shimmer {
+      background: linear-gradient(
+        to right, 
+        @bg-light 8%, 
+        @disabled-color 18%, 
+        @bg-light 33%
+      );
+    }
+  }
+
+  &--white {
+    .loading-skeleton__shimmer {
+      background: linear-gradient(
+        to right, 
+        @bg-white 8%, 
+        @disabled-color 18%, 
+        @bg-white 33%
+      );
+    }
+  }
+} 
