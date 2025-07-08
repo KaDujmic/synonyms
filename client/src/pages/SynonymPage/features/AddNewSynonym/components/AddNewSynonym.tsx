@@ -55,11 +55,11 @@ export const AddNewSynonym = (props: AddNewSynonymProps) => {
 						)} */}
 					</ClickOutsideAwareComponent>
 					<div className="synonym-card__synonyms-actions">
+						<Button onClick={handleCancel} className="button-outline">
+							Cancel
+						</Button>
 						<Button onClick={handleSave} className="button-primary">
 							Save
-						</Button>
-						<Button onClick={handleCancel} className="button-secondary">
-							Cancel
 						</Button>
 					</div>
 				</div>

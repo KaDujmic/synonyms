@@ -18,6 +18,7 @@
     font-size: @font-size-xxl;
     font-weight: bold;
     margin-bottom: @spacing-md;
+    margin-top: 0;
     color: @text-primary;
   }
 
@@ -34,7 +35,7 @@
   }
 
   &__synonyms-section {
-    margin-bottom: @spacing-lg;
+    margin-bottom: @spacing-xxl;
   }
 
   &__label {
@@ -56,7 +57,7 @@
     position: relative;
     overflow: hidden;
     white-space: nowrap;
-    color: @disabled-color;
+    color: @text-secondary;
     font-size: @font-size-small + 2px;
     width: 100%;
   }
@@ -71,20 +72,20 @@
   &__synonym-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: @spacing-sm;
     font-size: @font-size-large;
     text-align: center;
     border-radius: @border-radius-sm @border-radius-sm 0 0;
-    border-bottom: 5px solid @primary-color;
-    padding: 0 5px;
+    border-bottom: 2px solid @primary-color;
+    padding: 0 10px;
     cursor: pointer;
     overflow: hidden;
 
     svg {
-      color: @primary-color;
+      color: @error-color;
 
       &:hover {
-        filter: drop-shadow(0 0 5px lighten(@primary-color, 30%));
+        filter: drop-shadow(0 0 5px lighten(@error-color, 30%));
       }
     }
   }

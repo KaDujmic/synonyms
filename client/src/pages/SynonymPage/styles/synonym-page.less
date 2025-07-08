@@ -9,6 +9,7 @@
 
   &-card {
     width: 100%;
+    padding: inherit;
 
 		hr {
 			color: #e6e4e52b;
@@ -39,9 +40,10 @@
         font-size: @font-size-large;
         text-align: center;
 				border-radius: @border-radius-sm @border-radius-sm 0 0;
-				border-bottom: 5px solid @primary-color;
+				border-bottom: 2px solid @primary-color;
 				padding: 0 5px;
-				cursor: pointer;
+				cursor: default;
+        font-weight: 200;
 
 				&:hover {
 					background-color: lighten(@primary-color, 30%);
@@ -67,16 +69,27 @@
       &-input {
         position: relative;
         display: flex;
+        flex-direction: column;
         gap: @spacing-sm;
         min-width: 200px;
-				padding: 20px 0;
+				padding: @spacing-xxl 0 0 0;
+
+        @media (min-width: @tablet-breakpoint) {
+          flex-direction: row;;
+        }
 
 				&-field {
 					position: relative;
           display: flex;
+          margin-bottom: @spacing-sm;
+
+          @media (min-width: @tablet-breakpoint) {
+            margin-bottom: 0;
+          }
 
 					.input-field {
 						padding: 10px;
+
 					}
 				}
       }
@@ -114,6 +127,11 @@
         display: flex;
         gap: @spacing-sm;
         justify-content: flex-end;
+        flex-direction: column;
+
+        @media (min-width: @tablet-breakpoint) {
+          flex-direction: row;
+        }
 
 				.button {
 					padding: 10px 20px;

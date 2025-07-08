@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCreateSynonymMutation, useLazySearchAvailableSynonymsQuery } from '../../../api/apiSlice';
 import { useDebounce } from '../../../hooks/listeners/useDebounce';
 import type { Synonym } from '../../../types/Synonym.type';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const useCreateSynonym = () => {
-  const [word, setWord] = useState('');
+  const [searchParams] = useSearchParams();
+  const [word, setWord] = useState(searchParams.get('word') || '');
   const [synonyms, setSynonyms] = useState<Synonym[]>([]);
   const [currentSynonym, setCurrentSynonym] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -13,6 +14,14 @@ export const useCreateSynonym = () => {
   const [searchSynonyms, { data: searchResultsRaw, isLoading }] = useLazySearchAvailableSynonymsQuery();
   const [ createSynonym, { isLoading: isCreating }] = useCreateSynonymMutation();
   const [filteredResults, setFilteredResults] = useState<Synonym[]>([]);
+
+  useEffect(() => {
+    setWord(searchParams.get('word') || '');
+    setCurrentSynonym('');
+    setSynonyms([]);
+    setFilteredResults([]);
+  }, [searchParams]);
+
 
   const handleInput = (searchTerm: string) => {
     if (searchTerm.trim()) {
