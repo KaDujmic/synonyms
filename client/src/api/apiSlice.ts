@@ -89,6 +89,12 @@ export const apiSlice = createApi({
         providesTags: (result, _, { word, searchTerm }) => 
           result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
     }),
+
+    // GET /synonym/random - Get a random word from the synonym database
+    getRandomSynonym: builder.query<SynonymClientResponse, void>({
+      query: () => '/random',
+      providesTags: () => [{ type: 'Synonyms', id: 'random' }]
+    }),
   })
 });
 
@@ -102,5 +108,6 @@ export const {
   useCreateSynonymMutation,
   useAddSynonymsToWordMutation,
   useSearchAvailableSynonymsQuery,
-  useLazySearchAvailableSynonymsQuery
+  useLazySearchAvailableSynonymsQuery,
+  useGetRandomSynonymQuery
 } = apiSlice;

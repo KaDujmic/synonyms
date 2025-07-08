@@ -1,6 +1,9 @@
 import type { Synonym } from './Synonym.type';
  
 export type SynonymClientResponse = {
-  word: string;
-  synonyms: Synonym[];
+  status: string;
+  data: {
+    word: string;
+    synonyms: Synonym[];
+  };
 }; 

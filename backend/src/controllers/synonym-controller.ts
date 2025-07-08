@@ -119,4 +119,17 @@ export class SynonymController {
       }
     });
   }
+
+  async getRandomSynonym(req: Request, res: Response): Promise<Response> {
+    const randomSynonym = synonymService.getRandomSynonym();
+    
+    if (!randomSynonym) {
+      throw new NotFoundError('No synonyms found in database');
+    }
+    
+    return res.status(200).json({
+      status: 'success',
+      data: randomSynonym
+    });
+  }
 }

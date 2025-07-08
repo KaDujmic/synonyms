@@ -1,5 +1,6 @@
 import { Card } from "../../../components/Card"
 import { LoadingSkeleton } from "../../../components/LoadingSkeleton"
+import "../styles/synonym-card-loader.less"
 
 export const SynonymCardLoader = () => {
 	return (

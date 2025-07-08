@@ -1,13 +1,15 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import type { Synonym } from "../../../types/Synonym.type";
 import { LoadingSkeleton } from '../../../components/LoadingSkeleton';
+import { Card } from '../../../components/Card';
 
 interface SynonymCardProps {
-    searchTerm?: string;
-    synonyms: Synonym[];
-    isAdding: boolean;
-    handleAddClick: () => void;
-    isLoadingAddSynonym: boolean;
+	searchTerm?: string;
+	synonyms: Synonym[];
+	isAdding: boolean;
+	handleAddClick?: () => void;
+	isLoadingAddSynonym: boolean;
+	children?: React.ReactNode;
 }
 
 export const SynonymCard = (props: SynonymCardProps) => {
@@ -17,9 +19,11 @@ export const SynonymCard = (props: SynonymCardProps) => {
         isAdding,
         handleAddClick,
         isLoadingAddSynonym,
+				children,
     } = props;
+
     return (
-			<>
+			<Card className="synonym-card">
 				<div className="synonym-card__title">
 					{searchTerm}
 				</div>
@@ -28,7 +32,7 @@ export const SynonymCard = (props: SynonymCardProps) => {
 					synonyms
 				</div>
 				<div className="synonym-card__synonyms">
-					{synonyms?.map((synonym) => (
+					{synonyms?.map((synonym: Synonym) => (
 						<div 
 							className="synonym-card__synonyms-word"
 							key={synonym.slug}
@@ -39,12 +43,13 @@ export const SynonymCard = (props: SynonymCardProps) => {
 					{isLoadingAddSynonym && (
 						<LoadingSkeleton width="100%" height="32px" variant="gray" />
 					)}
-					{!isAdding && (
+					{!isAdding && handleAddClick && !isLoadingAddSynonym && (
 						<div className="synonym-card__synonyms-add" onClick={handleAddClick}>
 							<AddCircleOutlineOutlinedIcon />
 						</div>
 					)}
 				</div>
-			</>
+				{children}
+			</Card>
     )
 }

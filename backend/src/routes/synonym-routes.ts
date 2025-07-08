@@ -5,6 +5,11 @@ import { callbackErrorHandler } from '../middleware';
 const router = express.Router();
 const synonymController = new SynonymController();
 
+// GET /synonym/random - Get a random word from the synonym database
+router.get('/random', callbackErrorHandler(async (req, res) => {
+  await synonymController.getRandomSynonym(req, res);
+}));
+
 // GET /synonym/:searchTerm/synonym
 router.get('/:searchTerm', callbackErrorHandler(async (req, res) => {
   await synonymController.getSynonym(req, res);

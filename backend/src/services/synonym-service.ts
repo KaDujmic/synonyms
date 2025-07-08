@@ -95,7 +95,10 @@ class SynonymService {
 				word: originalWord,
 				slug: lowercaseWord,
         // Could be done maybe with only this.synonyms but i want to return the original word
-        synonyms: Array.from(this.synonyms.get(lowercaseWord) || []).map(synonym => this.caseMapping.get(synonym) || synonym)
+        synonyms: Array.from(this.synonyms.get(lowercaseWord) || []).map(synonym => ({
+          word: this.caseMapping.get(synonym) || synonym,
+          slug: synonym
+        }))
 			}));
     
     return results;
@@ -138,7 +141,10 @@ class SynonymService {
     return Array.from(result).map(synonym => ({
       word: this.caseMapping.get(synonym) || synonym,
       slug: synonym,
-      synonyms: this.synonyms.get(synonym)
+      synonyms: Array.from(this.synonyms.get(synonym) || []).map(synonym => ({
+        word: this.caseMapping.get(synonym) || synonym,
+        slug: synonym
+      }))
     }));
   }
 
@@ -197,9 +203,48 @@ class SynonymService {
     
     return {
       word: searchTerm,
-      synonyms: synonymObjects
+      synonyms: synonymObjects.map(synonym => ({
+        word: synonym.word,
+        slug: synonym.slug,
+        synonyms: synonym.synonyms?.map(s => ({
+          word: s.word,
+          slug: s.slug
+        }))
+      }))
     };
   }
+
+  /**
+   * Gets a random word from the synonym database
+   * 
+   * @returns A random synonym object with word and slug, or null if no words exist
+   */
+  public getRandomSynonym(): Synonym | null {
+    const allWords = Array.from(this.caseMapping.entries());
+
+    console.log(allWords);
+    
+    if (allWords.length === 0) {
+      return null;
+    }
+    
+    // Get a random word from the caseMapping
+    const randomIndex = Math.floor(Math.random() * allWords.length);
+    const [lowercaseWord, originalWord] = allWords[randomIndex];
+    
+    return {
+      word: originalWord,
+      slug: lowercaseWord,
+      synonyms: Array.from(this.synonyms.get(lowercaseWord) || []).map(synonym => {
+        return {
+          word: this.caseMapping.get(synonym) || synonym,
+          slug: synonym
+        }
+      })
+    };
+  }
+
+  
 }
 
 export default new SynonymService();

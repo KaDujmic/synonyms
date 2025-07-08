@@ -29,14 +29,13 @@ export const SynonymPage = () => {
   
   return (
     <div className="synonym">
-      <Card className="synonym-card">
-        <SynonymCard
-          searchTerm={searchTerm}
-          synonyms={synonym?.data?.synonyms || []}
-          isAdding={isAdding}
-          handleAddClick={handleAddClick}
-          isLoadingAddSynonym={isLoadingAddSynonym}
-        />
+      <SynonymCard
+        searchTerm={searchTerm}
+        synonyms={synonym?.data?.synonyms || []}
+        isAdding={isAdding}
+        handleAddClick={handleAddClick}
+        isLoadingAddSynonym={isLoadingAddSynonym}
+      >
         {isAdding && (
           <AddNewSynonym
             handleSave={handleSave}
@@ -48,7 +47,7 @@ export const SynonymPage = () => {
             searchResults={searchResults}
           />
         )}
-      </Card>
+      </SynonymCard>
     </div>
   );
 }; 
