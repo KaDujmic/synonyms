@@ -24,7 +24,7 @@ export const MarqueeComponent = ({
   return (
     <div className={`marquee-component ${className}`} ref={containerRef}>
       <span
-        className={`marquee-component__inner${shouldAnimate ? ' animate' : ''}`}
+        className={`marquee-component__inner ${shouldAnimate ? ' animate' : ''}`}
         ref={innerRef}
         style={shouldAnimate ? { animationDuration: `${speed}s` } : {}}
       >

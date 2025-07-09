@@ -1,6 +1,5 @@
 import { useGetSynonymQuery } from '../../api/apiSlice';
 import { useParams } from 'react-router-dom';
-import { Card } from '../../components/Card';
 import { useAddSynonym } from './hooks/useAddSynonym';
 import './styles/synonym-page.less';
 import { AddNewSynonym } from './features/AddNewSynonym/components/AddNewSynonym';

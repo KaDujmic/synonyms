@@ -27,6 +27,8 @@ export const useCreateSynonym = () => {
     if (searchTerm.trim()) {
       searchSynonyms({ word: '', searchTerm: searchTerm.trim() })
         .then((response: any) => {
+          console.log("response", response);
+          
           handleFilteredResults(synonyms, response?.data?.data?.synonyms);
         });
     } else {
@@ -63,8 +65,11 @@ export const useCreateSynonym = () => {
   };
 
   const handleFilteredResults = (synonyms: Synonym[], searchResults?: Synonym[]) => {
+    console.log("synonyms", synonyms);
+    console.log("searchResults", searchResults);
+    
     const allWords = new Set(
-      synonyms.flatMap(s => [s.word, ...(s.synonyms || [])]).map(w => w.toLowerCase())
+      synonyms.flatMap(s => [s.word, ...(s.synonyms || []).map(syn => syn.word)]).map(w => w.toLowerCase())
     );
 
     const apiResults: Synonym[] = searchResults || [];

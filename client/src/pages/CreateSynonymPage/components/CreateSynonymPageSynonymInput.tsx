@@ -63,7 +63,7 @@ export const CreateSynonymPageSynonymInput = (props: CreateSynonymPageSynonymInp
                 className="create-synonym-page__synonym-synonyms" 
                 speed={20}
               >
-                {synonym.synonyms?.join(', ')}
+                {synonym.synonyms?.map((synonym) => synonym.word).join(', ')}
               </MarqueeComponent>
               <CancelOutlinedIcon 
                 onClick={() => removeSynonym(synonym.slug)}

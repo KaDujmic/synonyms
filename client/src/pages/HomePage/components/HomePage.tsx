@@ -2,9 +2,13 @@ import { SearchBar } from "../../../features/Header/components/SearchBar";
 import { useGetRandomSynonymQuery } from "../../../api/apiSlice";
 import { SynonymCard } from "../../SynonymPage/components/SynonymCard";
 import { SynonymCardLoader } from "../../SynonymPage/components/SynonymCardLoader";
+import { useNavigate } from "react-router-dom";
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+
 
 export const HomePage = () => {
   const { data: randomSynonym, isLoading } = useGetRandomSynonymQuery();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -18,7 +22,9 @@ export const HomePage = () => {
               <p>Find synonyms instantly with our intelligent search</p>
             </div>
             <div className="feature">
-              <h3>➕ Add Your Own</h3>
+              <h3 onClick={() => {
+                navigate("/synonym/create");
+              }}><AddCircleOutlineOutlinedIcon /> Add Your Own</h3>
               <p>Contribute to our growing database of word relationships</p>
             </div>
             <div className="feature">
