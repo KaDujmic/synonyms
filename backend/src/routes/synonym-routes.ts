@@ -27,7 +27,7 @@ router.get('/:searchTerm/synonyms', callbackErrorHandler(async (req, res) => {
 
 // POST /synonym
 router.post('', callbackErrorHandler(async (req, res) => {
-  await synonymController.createSynonym(req, res);
+  await synonymController.createWord(req, res);
 }));
 
 // POST /synonym/:word/add - Add synonyms to an existing word

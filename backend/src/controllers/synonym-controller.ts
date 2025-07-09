@@ -54,6 +54,28 @@ export class SynonymController {
     });
   }
 
+  async createWord(req: Request, res: Response): Promise<Response> {
+    const { word, synonyms } = req.body;
+    
+    if (!word || word.trim() === '') {
+      throw new BadRequestError('Word is required');
+    }
+
+    if (!synonyms || !Array.isArray(synonyms) || synonyms.length === 0) {
+      throw new BadRequestError('Synonyms array is required and must not be empty');
+    }
+
+    synonymService.createWord(word, synonyms);
+
+    return res.status(201).json({
+      status: 'success',
+      data: {
+        word,
+        synonyms
+      }
+    });
+  }
+
   async createSynonym(req: Request, res: Response): Promise<Response> {
     const { word, synonyms } = req.body;
     

@@ -22,11 +22,11 @@ class SynonymService {
    */
   private initializeDummyData(): void {
     dummySynonymsData.forEach(({ word, synonyms }) => {
-      this.addSynonyms(word, synonyms);
+      this.createWord(word, synonyms);
     });
   }
 
-	// Dont know if this is good ... 2N^2 complexity, but for now I will leave it like this and revisit if i think of a better way
+	// Dont know if this is good ... O(n^2 + m) complexity, but for now I will leave it like this and revisit if i think of a better way
 	// The idea is to save the original case of the word and use it to return the synonyms in the original case
 	// But since im doing internal memory with maps ... I dont know if this is the best way to do it
 
@@ -34,6 +34,40 @@ class SynonymService {
 	// I decided that storing the word is less important than searching
 	// Assuming if this was a prod setting, we would seed the data on intial deploy
 	// And add words later on if some are missed
+
+  public createWord(word: string, synonyms: string[]): void {
+    // Collect ALL synonyms recursively - including synonyms of synonyms
+    const allSynonymsSet = new Set<string>();
+
+    // Add the provided synonyms
+    synonyms.forEach(synonym => allSynonymsSet.add(synonym.toLowerCase()));
+        
+    // Add synonyms of each provided synonym (recursive gathering)
+    for (const synonym of synonyms) {
+      const normalizedSynonym = synonym.toLowerCase();
+      const synonymSynonyms = this.synonyms.get(normalizedSynonym);
+      if (synonymSynonyms) {
+        Array.from(synonymSynonyms).forEach(synonym => allSynonymsSet.add(synonym));
+      }
+    }
+    
+    // Create the complete list of all words (original word + all synonyms)
+    const allWords = [word, ...Array.from(allSynonymsSet)];
+
+    // Create transitive relationships - each word gets all other words as synonyms
+    allWords.forEach(word1 => {
+      if (!this.synonyms.has(word1.toLowerCase())) {
+        this.synonyms.set(word1.toLowerCase(), new Set());
+        this.caseMapping.set(word1.toLowerCase(), word1);
+      }
+
+      allWords.forEach(word2 => {
+        if (word1 !== word2 && !this.synonyms.get(word1.toLowerCase())?.has(word2.toLowerCase())) {
+          this.synonyms.get(word1.toLowerCase())?.add(word2.toLowerCase());
+        }
+      });
+    });
+  }
 
   /**
    * Adds synonyms for a given word
@@ -50,11 +84,10 @@ class SynonymService {
     const existingSynonymsArray = Array.from(existingSynonyms);
     
     // Combine existing synonyms with new synonyms
-    const allSynonyms = [...existingSynonymsArray, ...synonyms];
-    
+    const allSynonyms = [...existingSynonymsArray, ...synonyms];    
     // Create the complete list of all words (original word + all synonyms)
     const allWords = [word, ...allSynonyms];
-    
+
     // Store original case mapping and normalize for internal operations
     const normalizedWords = allWords.map(w => {
       const normalized = w.toLowerCase();
