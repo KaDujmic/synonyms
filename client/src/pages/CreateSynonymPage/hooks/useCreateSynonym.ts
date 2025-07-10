@@ -16,6 +16,8 @@ export const useCreateSynonym = () => {
   const [filteredResults, setFilteredResults] = useState<Synonym[]>([]);
 
   useEffect(() => {
+    console.log("searchParams", searchParams);
+    
     setWord(searchParams.get('word') || '');
     setCurrentSynonym('');
     setSynonyms([]);

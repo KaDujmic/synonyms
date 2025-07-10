@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage/components/HomePage';
-import { SynonymPage } from '../pages/SynonymPage/SynonymPage';
+import { SynonymPage } from '../pages/SynonymPage/components/SynonymPage';
 import { CreateSynonymPage } from '../pages/CreateSynonymPage/components/CreateSynonymPage';
 import { Layout } from '../features/Layout/components/Layout';
 import { ErrorBoundary } from '../pages/ErrorBoundary/components/ErrorBoundary';

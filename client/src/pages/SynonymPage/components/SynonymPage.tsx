@@ -1,10 +1,10 @@
-import { useGetSynonymQuery } from '../../api/apiSlice';
+import { useGetSynonymQuery } from '../../../api/apiSlice';
 import { useParams } from 'react-router-dom';
-import { useAddSynonym } from './hooks/useAddSynonym';
-import './styles/synonym-page.less';
-import { AddNewSynonym } from './features/AddNewSynonym/components/AddNewSynonym';
-import { SynonymCard } from './components/SynonymCard';
-import { SynonymCardLoader } from './components/SynonymCardLoader';
+import { useAddSynonym } from '../hooks/useAddSynonym';
+import '../styles/synonym-page.less';
+import { AddNewSynonym } from '../features/AddNewSynonym/components/AddNewSynonym';
+import { SynonymCard } from './SynonymCard';
+import { SynonymCardLoader } from './SynonymCardLoader';
 
 export const SynonymPage = () => {
   const { searchTerm } = useParams();

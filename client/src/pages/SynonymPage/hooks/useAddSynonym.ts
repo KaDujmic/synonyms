@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAddSynonymsToWordMutation, useLazySearchAvailableSynonymsQuery } from '../../../api/apiSlice';
 import { useDebounce } from '../../../hooks/listeners/useDebounce';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const useAddSynonym = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [newSynonym, setNewSynonym] = useState('');
+  const navigate = useNavigate();
   const params = useParams();
   const [searchSynonyms, { data: searchResults, isLoading }] = useLazySearchAvailableSynonymsQuery();
   const [addSynonyms] = useAddSynonymsToWordMutation();
+  
+  useEffect(() => {
+    if (!searchResults) {
+      navigate(`/synonym/create?word=${params.searchTerm}`);
+    }
+  }, [searchResults]);
 
   const handleInput = (value: string) => {
     if (value.trim()) {
