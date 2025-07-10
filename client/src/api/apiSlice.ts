@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Synonym } from '../types/Synonym.type';
 import type { SynonymClientResponse } from '../types/SynonymClientResponse.type';
 import type { CreateSynonymRequest } from '../types/CreateSynonymRequest.type';
 import type { SearchSynonymResponse } from './types/SearchSynonymResponse.type';
@@ -28,23 +27,6 @@ export const apiSlice = createApi({
         result ? [{ type: 'Synonyms', id: `search-${searchTerm}` }] : []
     }),
 
-    // GET /synonym/:searchTerm/synonyms - Get synonym objects with nested synonyms
-    getSynonymObjects: builder.query<SynonymClientResponse, string>({
-      query: (searchTerm) => `/${searchTerm}/synonyms`,
-      providesTags: (result, _, searchTerm) => 
-        result ? [{ type: 'Synonyms', id: `objects-${searchTerm}` }] : []
-    }),
-
-    // GET /synonym/:searchTerm/similar - Find similar words
-    findSimilarWords: builder.query<Synonym[], { searchTerm: string; maxResults?: number }>({
-      query: ({ searchTerm, maxResults = 7 }) => ({
-        url: `/${searchTerm}/similar`,
-        params: { maxResults }
-      }),
-      providesTags: (result, _, { searchTerm }) => 
-        result ? [{ type: 'Synonyms', id: `similar-${searchTerm}` }] : []
-    }),
-
     // POST /synonym - Create new synonyms
     createSynonym: builder.mutation<GetSynonymResponse, CreateSynonymRequest>({
       query: (body) => ({
@@ -56,38 +38,24 @@ export const apiSlice = createApi({
     }),
 
     // POST /synonym/:word/add - Add synonyms to an existing word
-    addSynonymsToWord: builder.mutation<{ word: string; synonyms: string[] }, { word: string; synonyms: string[] }>({
+    addSynonymsToWord: builder.mutation<SynonymClientResponse, { word: string; synonyms: string[] }>({
       query: ({ word, synonyms }) => ({
         url: `/${word}/add`,
         method: 'POST',
         body: { synonyms }
       }),
-      invalidatesTags: (_, __, { word }) => [{ type: 'Synonyms', id: word }],
       async onQueryStarted({ word }, { dispatch, queryFulfilled }) {
         try {
           const response = await queryFulfilled;
           
           // Import and use the cache update hook
           const { updateSynonymCache } = await import('./hooks/useUpdateSynonymCache');
-          dispatch(updateSynonymCache(word, response.data.synonyms));
+          dispatch(updateSynonymCache(word, response.data.data.synonyms));
         } catch (error) {
           // Handle error implementation
           console.error('Failed to update getSynonym cache:', error);
         }
       }
-    }),
-
-    // GET /synonym/:word/available/:searchTerm - Search for available synonyms for a word
-    searchAvailableSynonyms: builder.query<SearchSynonymResponse, { word?: string; searchTerm: string }>({
-        query: ({ word, searchTerm }) => {
-          // If word is empty or undefined, use the general search endpoint
-          if (!word || word.trim() === '') {
-            return `/search/${searchTerm}`;
-          }
-          return `/${word}/available/${searchTerm}`;
-        },
-        providesTags: (result, _, { word, searchTerm }) => 
-          result ? [{ type: 'Synonyms', id: `available-${word}-${searchTerm}` }] : []
     }),
 
     // GET /synonym/random - Get a random word from the synonym database
@@ -103,11 +71,7 @@ export const {
   useGetSynonymQuery,
   useSearchSynonymsQuery,
   useLazySearchSynonymsQuery,
-  useGetSynonymObjectsQuery,
-  useFindSimilarWordsQuery,
   useCreateSynonymMutation,
   useAddSynonymsToWordMutation,
-  useSearchAvailableSynonymsQuery,
-  useLazySearchAvailableSynonymsQuery,
   useGetRandomSynonymQuery
 } = apiSlice;

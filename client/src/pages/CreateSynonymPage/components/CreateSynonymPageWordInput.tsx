@@ -10,14 +10,14 @@ export const CreateSynonymPageWordInput = (props: CreateSynonymPageWordInputProp
   return (
     <>
       <label className="create-synonym-page__label">Word:</label>
-        <div className="create-synonym-page__word-section">
-          <InputField
-            value={word}
-            onChange={handleWordChange}
-            placeholder="Type a word to create synonyms for..."
-            className="create-synonym-page__word-input"
-          />
-        </div>
+      <div className="create-synonym-page__word-section">
+        <InputField
+          value={word}
+          onChange={handleWordChange}
+          placeholder="Type a word to create synonyms for..."
+          className="create-synonym-page__word-input"
+        />
+      </div>
     </>
   )
 }

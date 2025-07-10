@@ -20,11 +20,6 @@ router.get('/search/:searchTerm/', callbackErrorHandler(async (req, res) => {
   await synonymController.searchSynonyms(req, res);
 }));
 
-// GET /synonym/objects
-router.get('/:searchTerm/synonyms', callbackErrorHandler(async (req, res) => {
-  await synonymController.getSynonymObjects(req, res);
-}));
-
 // POST /synonym
 router.post('', callbackErrorHandler(async (req, res) => {
   await synonymController.createWord(req, res);

@@ -1,6 +1,7 @@
+import type { Synonym } from '../../types/Synonym.type';
 import { apiSlice } from '../apiSlice';
 
-export const updateSynonymCache = (word: string, newSynonyms: string[]) => {
+export const updateSynonymCache = (word: string, newSynonyms: Synonym[]) => {
   return apiSlice.util.updateQueryData(
     'getSynonym',
     word,
@@ -8,11 +9,12 @@ export const updateSynonymCache = (word: string, newSynonyms: string[]) => {
       if (draft && draft.data && draft.data.synonyms) {
         // Add the new synonyms to the existing list
         const newSynonymsObjects = newSynonyms.map(synonym => ({
-          word: synonym,
-          slug: synonym.toLowerCase()
+          word: synonym.word,
+          slug: synonym.slug,
+          synonyms: synonym.synonyms
         }));
         
-        draft.data.synonyms = [...draft.data.synonyms, ...newSynonymsObjects];
+        draft.data.synonyms = [...newSynonymsObjects];
       }
     }
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useCreateSynonymMutation, useLazySearchAvailableSynonymsQuery } from '../../../api/apiSlice';
+import { useCreateSynonymMutation, useLazySearchSynonymsQuery } from '../../../api/apiSlice';
 import { useDebounce } from '../../../hooks/listeners/useDebounce';
 import type { Synonym } from '../../../types/Synonym.type';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -11,13 +11,11 @@ export const useCreateSynonym = () => {
   const [currentSynonym, setCurrentSynonym] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
-  const [searchSynonyms, { data: searchResultsRaw, isLoading }] = useLazySearchAvailableSynonymsQuery();
+  const [searchSynonyms, { data: searchResultsRaw, isLoading }] = useLazySearchSynonymsQuery();
   const [ createSynonym, { isLoading: isCreating }] = useCreateSynonymMutation();
   const [filteredResults, setFilteredResults] = useState<Synonym[]>([]);
 
   useEffect(() => {
-    console.log("searchParams", searchParams);
-    
     setWord(searchParams.get('word') || '');
     setCurrentSynonym('');
     setSynonyms([]);
@@ -27,10 +25,8 @@ export const useCreateSynonym = () => {
 
   const handleInput = (searchTerm: string) => {
     if (searchTerm.trim()) {
-      searchSynonyms({ word: '', searchTerm: searchTerm.trim() })
-        .then((response: any) => {
-          console.log("response", response);
-          
+      searchSynonyms(searchTerm.trim())
+        .then((response: any) => {          
           handleFilteredResults(synonyms, response?.data?.data?.synonyms);
         });
     } else {
@@ -67,9 +63,6 @@ export const useCreateSynonym = () => {
   };
 
   const handleFilteredResults = (synonyms: Synonym[], searchResults?: Synonym[]) => {
-    console.log("synonyms", synonyms);
-    console.log("searchResults", searchResults);
-    
     const allWords = new Set(
       synonyms.flatMap(s => [s.word, ...(s.synonyms || []).map(syn => syn.word)]).map(w => w.toLowerCase())
     );

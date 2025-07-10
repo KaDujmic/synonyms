@@ -26,6 +26,7 @@ export const SearchBar = () => {
       >
         <div className="search-bar-input">
           <InputField
+            id="search-bar-input"
             type="text"
             value={searchTerm}
             onChange={handleChange}
@@ -33,14 +34,14 @@ export const SearchBar = () => {
             onFocus={() => setFocused(true)}
           />
           {isSuccess && synonyms  && focused && (
-          <SearchResults 
-            setFocused={setFocused}
-            results={synonyms?.data?.synonyms} 
-            setSearchTerm={setSearchTerm} 
-            searchTerm={searchTerm}
-            isLoading={isLoading}
-          />
-        )}
+            <SearchResults 
+              setFocused={setFocused}
+              results={synonyms?.data?.synonyms} 
+              setSearchTerm={setSearchTerm} 
+              searchTerm={searchTerm}
+              isLoading={isLoading}
+            />
+          )}
         </div>
         <Button onClick={handleSearch} className="button-primary">
           Search

@@ -39,20 +39,20 @@ export class SynonymController {
     });
   }
 
-  async getSynonymObjects(req: Request, res: Response): Promise<Response> {
-    const { searchTerm } = req.params;
+  // async getSynonymObjects(req: Request, res: Response): Promise<Response> {
+  //   const { searchTerm } = req.params;
     
-    const synonymObjects = synonymService.getSynonymObjects(searchTerm);
+  //   const synonymObjects = synonymService.getSynonymObjects(searchTerm);
 
-    if (!synonymObjects) {
-      throw new NotFoundError('Synonym not found');
-    }
+  //   if (!synonymObjects) {
+  //     throw new NotFoundError('Synonym not found');
+  //   }
     
-    return res.status(200).json({
-      status: 'success',
-      data: synonymObjects
-    });
-  }
+  //   return res.status(200).json({
+  //     status: 'success',
+  //     data: synonymObjects
+  //   });
+  // }
 
   async createWord(req: Request, res: Response): Promise<Response> {
     const { word, synonyms } = req.body;
@@ -116,7 +116,7 @@ export class SynonymController {
       status: 'success',
       data: {
         word,
-        synonyms
+        synonyms: synonymService.getSynonym(word)
       }
     });
   }

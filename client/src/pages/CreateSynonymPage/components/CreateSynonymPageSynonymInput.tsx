@@ -3,6 +3,7 @@ import { MarqueeComponent } from "../../../components/MarqueeComponent";
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import type { Synonym } from "../../../types/Synonym.type";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { CreateSynonymPageSynonymList } from "./CreateSynonymPageSynonymList";
 
 
 interface CreateSynonymPageSynonymInputProps {
@@ -53,26 +54,10 @@ export const CreateSynonymPageSynonymInput = (props: CreateSynonymPageSynonymInp
           placeholder="Type a synonym..."
         />
       </div>
-      
-      {synonyms.length > 0 && (
-        <div className="create-synonym-page__synonyms-list">
-          {synonyms.map((synonym) => (
-            <div key={synonym.slug} className="create-synonym-page__synonym-item">
-              <span>{synonym.word}</span>
-              <MarqueeComponent 
-                className="create-synonym-page__synonym-synonyms" 
-                speed={20}
-              >
-                {synonym.synonyms?.map((synonym) => synonym.word).join(', ')}
-              </MarqueeComponent>
-              <CancelOutlinedIcon 
-                onClick={() => removeSynonym(synonym.slug)}
-                className="create-synonym-page__remove-btn"
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      <CreateSynonymPageSynonymList 
+        synonyms={synonyms} 
+        removeSynonym={removeSynonym} 
+      />
     </div>
   )
 }

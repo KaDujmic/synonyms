@@ -1,14 +1,19 @@
 import { useGetSynonymQuery } from '../../../api/apiSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAddSynonym } from '../hooks/useAddSynonym';
 import '../styles/synonym-page.less';
 import { AddNewSynonym } from '../features/AddNewSynonym/components/AddNewSynonym';
 import { SynonymCard } from './SynonymCard';
 import { SynonymCardLoader } from './SynonymCardLoader';
+import { useSynonym } from '../hooks/useSynonym';
 
 export const SynonymPage = () => {
-  const { searchTerm } = useParams();
-  const { data: synonym, isLoading } = useGetSynonymQuery(searchTerm);
+  const { 
+    synonym, 
+    isLoading,
+    searchTerm,
+  } = useSynonym();
+
   const {
     isAdding,
     newSynonym,
@@ -19,7 +24,7 @@ export const SynonymPage = () => {
     handleSave,
     isFocused,
     setIsFocused,
-    isLoading: isLoadingAddSynonym,
+    isLoadingAddSynonym,
   } = useAddSynonym();
 
   if (isLoading) {
