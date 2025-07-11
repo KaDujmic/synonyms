@@ -46,6 +46,7 @@ synonyms/
       pages/
       routing/
       styles/
+      translations/
       types/
     package.json
     tsconfig.json
