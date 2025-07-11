@@ -9,8 +9,6 @@ A full-stack web application for searching, discovering, and contributing synony
 - 🔍 **Smart Search:** Instantly find synonyms for any word.
 - ➕ **Add Your Own:** Contribute new words and synonyms to the database.
 - 🎲 **Random Discovery:** Explore random words and expand your vocabulary.
-- ⚡ **Modern UI:** Responsive, clean, and user-friendly interface.
-- 🛡️ **Robust API:** Type-safe, RESTful backend with error handling.
 
 ---
 
@@ -19,8 +17,7 @@ A full-stack web application for searching, discovering, and contributing synony
 - **Frontend:** React 19, TypeScript, Vite, Redux Toolkit, MUI, LESS
 - **Backend:** Express, TypeScript, ts-node, nodemon
 - **API:** RESTful, CORS-enabled, error-handled
-- **Testing:** (Add details if you have tests)
-- **Dev Tools:** ESLint, Prettier, VSCode recommended extensions
+- **Testing:** Playwright for end-to-end testing
 
 ---
 
@@ -55,6 +52,7 @@ synonyms/
     vite.config.ts
 
   bruno-synonym/   # API request collections (Bruno)
+  tests/           # Playwright tests
   README.md
 ```
 
@@ -91,8 +89,10 @@ npm run dev
 
 - `GET /synonym/:searchTerm` — Get synonyms for a word
 - `GET /synonym/search/:searchTerm` — Search for words starting with a prefix
-- `POST /synonym` — Add a new word and its synonyms
-- (See `backend/src/routes/synonym-routes.ts` for more)
+- `POST /synonym` — Create a new word and its synonyms
+- `POST /synonym/:word/add` — Add synonyms to an existing word
+- `GET /synonym/random` — Get a random word from the database
+- `GET /synonym/:word/available/:searchTerm` — Search for available synonyms to add
 
 ---
 
@@ -108,19 +108,17 @@ npm run dev
 ### Backend
 
 - `npm start` — Start backend with nodemon
-- `npm run test` — (Placeholder)
 
 ### Frontend
 
 - `npm run dev` — Start frontend in dev mode
 - `npm run build` — Build for production
 - `npm run preview` — Preview production build
-- `npm run lint` — Lint code
-- `npm run test` -- Run Playwright tests
-- `npm run test:ui` -- Run Playwright tests with UI
+- `npm run test` — Run Playwright tests
+- `npm run test:ui` — Run Playwright tests with UI
 
 ---
 
 ## Bruno
 
-There is a bruno collection, which you can import to postman if you like or open it in the Bruno app 
+There is a bruno collection, which you can import to postman if you like or open it in the Bruno app
