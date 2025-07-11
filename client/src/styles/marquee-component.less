@@ -1,5 +1,4 @@
 @import './variables.less';
-@import './animations.less';
 
 .marquee-component {
   position: relative;
@@ -23,4 +22,13 @@
 
 .marquee-component__inner.animate {
   animation: scrollLeft 10s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

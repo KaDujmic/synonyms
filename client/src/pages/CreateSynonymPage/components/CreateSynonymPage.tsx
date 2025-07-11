@@ -3,9 +3,9 @@ import { useCreateSynonym } from '../hooks/useCreateSynonym';
 import '../styles/create-synonym-page.less';
 import { SynonymCardLoader } from '../../SynonymPage/components/SynonymCardLoader';
 import { CreateSynonymPageSynonymInput } from './CreateSynonymPageSynonymInput';
-import { CreateSynonymPageHeader } from './CreateSynonymPageHeader';
 import { CreateSynonymPageWordInput } from './CreateSynonymPageWordInput';
 import { CreateSynonymPageSubmit } from './CreateSynonymPageSubmit';
+import { CreateSynonymPageHeader } from './CreateSynonymPageHeader';
 
 export const CreateSynonymPage = () => {
   const {

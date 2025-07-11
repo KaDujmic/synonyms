@@ -2,6 +2,7 @@ import { Button } from "../../../../../components/Button"
 import { ClickOutsideAwareComponent } from "../../../../../features/ClickOutsideAwareComponent/components/ClickOutsideAwareComponent"
 import { InputField } from "../../../../../components/InputField"
 import type { Synonym } from "../../../../../types/Synonym.type";
+import { useTranslations } from "../../../../../translations/useTranslations";
 
 interface AddNewSynonymProps {
     handleSave: () => void;
@@ -14,6 +15,7 @@ interface AddNewSynonymProps {
 }
 
 export const AddNewSynonym = (props: AddNewSynonymProps) => {
+    const { translation } = useTranslations();
     const {
 			newSynonym,
 			setIsFocused,
@@ -31,7 +33,7 @@ export const AddNewSynonym = (props: AddNewSynonymProps) => {
 						<InputField
 							value={newSynonym}
 							onChange={handleInputChange}
-							placeholder="Type a synonym..."
+							placeholder={translation('synonym.input.placeholder')}
 							autoFocus
 							onFocus={() => setIsFocused(true)}
 						/>
@@ -54,10 +56,10 @@ export const AddNewSynonym = (props: AddNewSynonymProps) => {
 					</ClickOutsideAwareComponent>
 					<div className="synonym-card__synonyms-actions">
 						<Button onClick={handleCancel} className="button-outline">
-							Cancel
+							{translation('common.cancel')}
 						</Button>
 						<Button onClick={handleSave} className="button-primary">
-							Save
+							{translation('common.save')}
 						</Button>
 					</div>
 				</div>

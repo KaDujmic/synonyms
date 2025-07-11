@@ -5,8 +5,10 @@ import { InputField } from '../../../components/InputField';
 import { ClickOutsideAwareComponent } from '../../ClickOutsideAwareComponent/components/ClickOutsideAwareComponent';
 import { useHandleSearch } from '../hooks/useHandleSearch';
 import { SearchResults } from './SearchResults';
+import { useTranslations } from '../../../translations/useTranslations';
 
 export const SearchBar = () => {
+  const { translation } = useTranslations();
   const { 
     searchTerm,
     handleSearch,
@@ -30,7 +32,7 @@ export const SearchBar = () => {
             type="text"
             value={searchTerm}
             onChange={handleChange}
-            placeholder="Search for synonyms..."
+            placeholder={translation('header.searchPlaceholder')}
             onFocus={() => setFocused(true)}
           />
           {isSuccess && synonyms  && focused && (
@@ -44,7 +46,7 @@ export const SearchBar = () => {
           )}
         </div>
         <Button onClick={handleSearch} className="button-primary">
-          Search
+          {translation('common.search')}
         </Button>
         
       </ClickOutsideAwareComponent>

@@ -1,4 +1,5 @@
 import { InputField } from "../../../components/InputField";
+import { useTranslations } from "../../../translations/useTranslations";
 
 interface CreateSynonymPageWordInputProps {
   word: string;
@@ -6,15 +7,16 @@ interface CreateSynonymPageWordInputProps {
 }
 
 export const CreateSynonymPageWordInput = (props: CreateSynonymPageWordInputProps) => {
+  const { translation } = useTranslations();
   const { word, handleWordChange } = props;
   return (
     <>
-      <label className="create-synonym-page__label">Word:</label>
+      <label className="create-synonym-page__label">{translation('createSynonym.word.label')}</label>
       <div className="create-synonym-page__word-section">
         <InputField
           value={word}
           onChange={handleWordChange}
-          placeholder="Type a word to create synonyms for..."
+          placeholder={translation('createSynonym.word.placeholder')}
           className="create-synonym-page__word-input"
         />
       </div>

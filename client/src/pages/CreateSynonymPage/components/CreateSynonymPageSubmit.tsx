@@ -1,5 +1,6 @@
 import { Button } from "../../../components/Button"
 import type { Synonym } from "../../../types/Synonym.type"
+import { useTranslations } from "../../../translations/useTranslations";
 
 interface CreateSynonymPageSubmitProps {
   handleSave: () => void;
@@ -9,6 +10,7 @@ interface CreateSynonymPageSubmitProps {
 }
 
 export const CreateSynonymPageSubmit = (props: CreateSynonymPageSubmitProps) => {
+  const { translation } = useTranslations();
   const {
     handleSave,
     word,
@@ -25,7 +27,7 @@ export const CreateSynonymPageSubmit = (props: CreateSynonymPageSubmitProps) => 
         // I will do it here with the disabled prop :)
         disabled={!word.trim() || synonyms.length === 0 || isCreating}
       >
-        SAVE
+        {translation('createSynonym.submit.button')}
       </Button>
     </div>
   )

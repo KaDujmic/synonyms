@@ -2,6 +2,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import type { Synonym } from "../../../types/Synonym.type";
 import { LoadingSkeleton } from '../../../components/LoadingSkeleton';
 import { Card } from '../../../components/Card';
+import { useTranslations } from "../../../translations/useTranslations";
 
 interface SynonymCardProps {
 	searchTerm?: string;
@@ -13,6 +14,7 @@ interface SynonymCardProps {
 }
 
 export const SynonymCard = (props: SynonymCardProps) => {
+    const { translation } = useTranslations();
     const {
         searchTerm,
         synonyms,
@@ -29,7 +31,7 @@ export const SynonymCard = (props: SynonymCardProps) => {
 				</div>
 				<hr/>
 				<div className="synonym-card__subtitle">
-					synonyms
+					{translation('synonym.card.subtitle')}
 				</div>
 				<div className="synonym-card__synonyms">
 					{synonyms?.map((synonym: Synonym) => (

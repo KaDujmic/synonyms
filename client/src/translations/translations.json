@@ -1,0 +1,75 @@
+{
+  "common": {
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "add": "Add",
+    "remove": "Remove",
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Not Found"
+  },
+  "header": {
+    "searchPlaceholder": "Search for synonyms...",
+    "logoAlt": "logo"
+  },
+  "homepage": {
+    "title": "Your Ultimate Synonym Companion",
+    "description": "Search, discover, and create connections between words. Whether you're writing, learning, or just curious, find the right synonym to enhance your communication.",
+    "features": {
+      "smartSearch": {
+        "title": "Smart Search",
+        "description": "Find synonyms instantly with our intelligent search"
+      },
+      "addYourOwn": {
+        "title": "Add Your Own",
+        "description": "Contribute to our growing database of word relationships"
+      },
+      "randomDiscovery": {
+        "title": "Random Discovery",
+        "description": "Explore new words and expand your vocabulary"
+      }
+    }
+  },
+  "search": {
+    "results": {
+      "createNewSynonym": "Create a new synonym?",
+      "createNewSynonymFor": "Create a new synonym for"
+    }
+  },
+  "synonym": {
+    "card": {
+      "subtitle": "synonyms",
+      "addButton": "Add synonym"
+    },
+    "input": {
+      "placeholder": "Type a synonym..."
+    }
+  },
+  "createSynonym": {
+    "header": {
+      "title": "Add a new word",
+      "description": "If you do not find the word you are looking for, you can add it here. New synonyms not found will be added to the database.",
+      "description2": "This helps build our community-driven synonym database."
+    },
+    "word": {
+      "label": "Word:",
+      "placeholder": "Type a word to create synonyms for..."
+    },
+    "synonyms": {
+      "label": "Synonyms:",
+      "placeholder": "Type a synonym..."
+    },
+    "submit": {
+      "button": "SAVE"
+    }
+  },
+  "errors": {
+    "pageNotFound": {
+      "title": "Page not found"
+    },
+    "errorPage": {
+      "alt": "Error"
+    }
+  }
+}

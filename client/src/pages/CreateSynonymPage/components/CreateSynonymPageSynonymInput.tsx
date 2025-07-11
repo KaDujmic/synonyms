@@ -1,9 +1,8 @@
 import { SuggestField } from "../../../features/SuggestField/components/SuggestField";
-import { MarqueeComponent } from "../../../components/MarqueeComponent";
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import type { Synonym } from "../../../types/Synonym.type";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { CreateSynonymPageSynonymList } from "./CreateSynonymPageSynonymList";
+import { useTranslations } from "../../../translations/useTranslations";
 
 
 interface CreateSynonymPageSynonymInputProps {
@@ -18,6 +17,7 @@ interface CreateSynonymPageSynonymInputProps {
 }
 
 export const CreateSynonymPageSynonymInput = (props: CreateSynonymPageSynonymInputProps) => {
+  const { translation } = useTranslations();
   const {
     currentSynonym,
     handleSynonymChange,
@@ -31,7 +31,7 @@ export const CreateSynonymPageSynonymInput = (props: CreateSynonymPageSynonymInp
 
   return (
     <div className="create-synonym-page__synonyms-section">
-      <label className="create-synonym-page__label">Synonyms:</label>
+      <label className="create-synonym-page__label">{translation('createSynonym.synonyms.label')}</label>
       <div className="create-synonym-page__add-synonym">
         <SuggestField
           customButton={
@@ -51,7 +51,7 @@ export const CreateSynonymPageSynonymInput = (props: CreateSynonymPageSynonymInp
           setIsFocused={setIsFocused}
           searchResults={searchResults}
           isFocused={isFocused}
-          placeholder="Type a synonym..."
+          placeholder={translation('createSynonym.synonyms.placeholder')}
         />
       </div>
       <CreateSynonymPageSynonymList 

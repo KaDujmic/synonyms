@@ -1,5 +1,6 @@
 import type { Synonym } from '../../../types/Synonym.type';
 import { useNavigate } from 'react-router-dom';
+import { useTranslations } from '../../../translations/useTranslations';
 
 interface SearchResultsProps {
   results: Synonym[];
@@ -18,6 +19,7 @@ export const SearchResults= (props: SearchResultsProps) => {
 		isLoading
 	} = props;
 	const navigate = useNavigate();
+	const { translation } = useTranslations();
 
 	const onResultClick = (result: Synonym) => {		
 		setSearchTerm(result.word);
@@ -35,7 +37,7 @@ export const SearchResults= (props: SearchResultsProps) => {
 						navigate(`/synonym/create`);
 					}}
 				>
-					Create a new synonym?
+					{translation('search.results.createNewSynonym')}
 				</div>
 			)}
 			{searchTerm.length > 0 && results.map((result, index) => (
@@ -55,7 +57,7 @@ export const SearchResults= (props: SearchResultsProps) => {
 						navigate(`/synonym/create?word=${searchTerm}`);
 					}}
 				>
-					Create a new synonym for <b>{searchTerm}</b>?
+					{translation('search.results.createNewSynonymFor')} <b>{searchTerm}</b>?
 				</div>
 			)}
     </div>

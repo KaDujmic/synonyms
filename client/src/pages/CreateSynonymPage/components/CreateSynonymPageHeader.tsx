@@ -1,14 +1,17 @@
+import { useTranslations } from "../../../translations/useTranslations";
+
 export const CreateSynonymPageHeader = () => {
+  const { translation } = useTranslations();
+
   return (
-    <>
+    <div className="create-synonym-page__header">
       <h1 className="create-synonym-page__title">
-        <i>Add a new word</i>
+        <i>{translation('createSynonym.header.title')}</i>
       </h1>
-      <p className="create-synonym-page__description">
-        If you do not find the word you are looking for, you can add it here.
-        <br />
-        New synonyms not found will be added to the database.
+      <p>
+        {translation('createSynonym.header.description')} <br />
+        {translation('createSynonym.header.description2')}
       </p>
-    </>
-  )
-}
+    </div>
+  );
+};

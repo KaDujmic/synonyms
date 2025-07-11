@@ -3,6 +3,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import { useNavigate } from "react-router-dom";
+import { useTranslations } from "../../../translations/useTranslations";
 
 interface HomePageDescriptionProps {
   refetch: () => void;
@@ -10,16 +11,17 @@ interface HomePageDescriptionProps {
 
 export const HomePageDescription = ({ refetch }: HomePageDescriptionProps) => {
   const navigate = useNavigate();
+  const { translation } = useTranslations();
 
 
   return (
     <div className="home-page__hero">
-      <h1>Your Ultimate Synonym Companion</h1>
-      <p>Search, discover, and create connections between words. Whether you're writing, learning, or just curious, find the right synonym to enhance your communication.</p>
+      <h1>{translation('homepage.title')}</h1>
+      <p>{translation('homepage.description')}</p>
       <div className="home-page__features">
         <HomePageSection 
-          title="Smart Search" 
-          description="Find synonyms instantly with our intelligent search" 
+          title={translation('homepage.features.smartSearch.title')} 
+          description={translation('homepage.features.smartSearch.description')} 
           Icon={<SearchOutlinedIcon 
             onClick={() => {
               const searchInput = document.getElementById('search-bar-input') as HTMLInputElement;
@@ -30,8 +32,8 @@ export const HomePageDescription = ({ refetch }: HomePageDescriptionProps) => {
           />} 
         />
         <HomePageSection 
-          title="Add Your Own" 
-          description="Contribute to our growing database of word relationships" 
+          title={translation('homepage.features.addYourOwn.title')} 
+          description={translation('homepage.features.addYourOwn.description')} 
           Icon={
             <AddCircleOutlineOutlinedIcon 
               onClick={() => {
@@ -41,8 +43,8 @@ export const HomePageDescription = ({ refetch }: HomePageDescriptionProps) => {
           } 
         />
         <HomePageSection 
-          title="Random Discovery" 
-          description="Explore new words and expand your vocabulary" 
+          title={translation('homepage.features.randomDiscovery.title')} 
+          description={translation('homepage.features.randomDiscovery.description')} 
           Icon={
             <ReplayOutlinedIcon 
               onClick={() => {
