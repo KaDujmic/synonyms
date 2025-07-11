@@ -36,16 +36,14 @@ export const apiSlice = createApi({
       }),
       async onQueryStarted({ word }, { dispatch, queryFulfilled }) {
         try {
-          const response = await queryFulfilled;
-          
+          await queryFulfilled;
           // Force a refetch of the getSynonym query for this word
-          dispatch(apiSlice.util.invalidateTags([{ type: 'Synonyms', id: word }]));
+          dispatch(apiSlice.util.invalidateTags([{ type: 'Synonym', id: word }]));
         } catch (error) {
           // Handle error implementation
           console.error('Failed to update getSynonym cache:', error);
         }
       },
-      invalidatesTags: ['Synonyms']
     }),
 
     // POST /synonym/:word/add - Add synonyms to an existing word

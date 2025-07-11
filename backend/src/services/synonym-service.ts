@@ -1,6 +1,5 @@
 // This would be a file like a Repository/Context in a real world application I assume
 import { Synonym } from "../types/Synonym.type";
-import { SynonymClientResponse } from "../types/SynonymClientResponse.type";
 import { dummySynonymsData } from "../data/dummy-synonyms";
 
 type SynonymMap = Map<string, Set<string>>;
@@ -36,19 +35,7 @@ class SynonymService {
     }
     
     const allWords = [word, ...Array.from(allSynonymsSet)];
-
-    allWords.forEach(word1 => {
-      if (!this.synonyms.has(word1.toLowerCase())) {
-        this.synonyms.set(word1.toLowerCase(), new Set());
-        this.caseMapping.set(word1.toLowerCase(), word1);
-      }
-
-      allWords.forEach(word2 => {
-        if (word1 !== word2 && !this.synonyms.get(word1.toLowerCase())?.has(word2.toLowerCase())) {
-          this.synonyms.get(word1.toLowerCase())?.add(word2.toLowerCase());
-        }
-      });
-    });
+    this.createRelationshipsBetweenWords(allWords);
   }
 
   /**
@@ -73,17 +60,7 @@ class SynonymService {
       return normalized;
     });
 
-    for (const word1 of normalizedWords) {
-      if (!this.synonyms.has(word1)) {
-        this.synonyms.set(word1, new Set());
-      }
-
-      for (const word2 of normalizedWords) {
-        if (word1 !== word2) {
-          this.synonyms.get(word1)?.add(word2);
-        }
-      }
-    }
+    this.createRelationshipsBetweenWords(normalizedWords);
   }
 
     /**
@@ -121,27 +98,6 @@ class SynonymService {
     return Array.from(result).map(synonym => ({
       word: this.caseMapping.get(synonym) || synonym,
       slug: synonym
-    }));
-  }
-
-  /**
-   * Gets synonyms for a word without recursion (to avoid infinite loops)
-   * 
-   * @param word - The word to get synonyms for
-   * @returns Array of synonym objects with words and slugs
-   */
-  private getSynonymsForWord(word: string): Synonym[] | null {
-    const normalized = word.toLowerCase();
-    const result = this.synonyms.get(normalized);
-    
-    if (!result) {
-      return null;
-    }
-    
-    return Array.from(result).map(synonym => ({
-      word: this.caseMapping.get(synonym) || synonym,
-      slug: synonym,
-      synonyms: this.convertSynonymsSetToArray(this.synonyms.get(synonym) || new Set())
     }));
   }
 
@@ -195,6 +151,21 @@ class SynonymService {
       word: this.caseMapping.get(synonym) || synonym,
       slug: synonym
     }));
+  }
+
+  private createRelationshipsBetweenWords(words: string[]): void {
+    words.forEach(word1 => {
+      if (!this.synonyms.has(word1.toLowerCase())) {
+        this.synonyms.set(word1.toLowerCase(), new Set());
+        this.caseMapping.set(word1.toLowerCase(), word1);
+      }
+
+      words.forEach(word2 => {
+        if (word1 !== word2 && !this.synonyms.get(word1.toLowerCase())?.has(word2.toLowerCase())) {
+          this.synonyms.get(word1.toLowerCase())?.add(word2.toLowerCase());
+        }
+      });
+    });
   }
 
   private filterMatchingWords(normalizedSearchTerm: string, normalizedWord: string): Synonym[] {

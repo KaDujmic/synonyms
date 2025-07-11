@@ -14,7 +14,7 @@ export const useSynonym = () => {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (isError && !isLoading && !isUninitialized && !synonym) {
+    if (isError && !isLoading && !isUninitialized) {
       navigate(`/synonym/create?word=${searchTerm}`, { replace: true });
     }
   }, [isError, isLoading, isUninitialized]);
