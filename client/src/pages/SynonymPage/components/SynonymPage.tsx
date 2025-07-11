@@ -1,5 +1,3 @@
-import { useGetSynonymQuery } from '../../../api/apiSlice';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useAddSynonym } from '../hooks/useAddSynonym';
 import '../styles/synonym-page.less';
 import { AddNewSynonym } from '../features/AddNewSynonym/components/AddNewSynonym';

@@ -1,17 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSynonymQuery } from "../../../api/apiSlice";
+import { useLazyGetSynonymQuery } from "../../../api/apiSlice";
 import { useEffect } from "react";
 
 export const useSynonym = () => {
   const { searchTerm } = useParams();
   const navigate = useNavigate();
-  const { data: synonym, isLoading, isError } = useGetSynonymQuery(searchTerm || "");
+  const [getSynonym, { data: synonym, isLoading, isError, isUninitialized }] = useLazyGetSynonymQuery();
 
   useEffect(() => {
-    if (isError) {
+    if (searchTerm) {
+      getSynonym(searchTerm);
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (isError && !isLoading && !isUninitialized && !synonym) {
       navigate(`/synonym/create?word=${searchTerm}`, { replace: true });
     }
-  }, [isError]);
+  }, [isError, isLoading, isUninitialized]);
 
   return {
     synonym: synonym,

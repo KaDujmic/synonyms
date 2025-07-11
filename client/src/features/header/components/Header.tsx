@@ -14,9 +14,8 @@ export const Header = () => {
 
   return (
     <div className="header">
-      <div className="header-logo">
+      <div className="header-logo" onClick={handleLogoClick}>
         <img 
-          onClick={handleLogoClick} 
           src="/src/assets/letter-s.svg" 
           alt="logo" 
           className="logo" 

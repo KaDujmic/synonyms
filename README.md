@@ -116,6 +116,8 @@ npm run dev
 - `npm run build` — Build for production
 - `npm run preview` — Preview production build
 - `npm run lint` — Lint code
+- `npm run test` -- Run Playwright tests
+- `npm run test:ui` -- Run Playwright tests with UI
 
 ---
 

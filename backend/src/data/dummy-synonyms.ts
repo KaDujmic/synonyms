@@ -66,7 +66,7 @@ export const dummySynonymsData = [
   { 
     word: "smart", 
     synonyms: [
-      "intelligent", "clever", "bright", "wise", "brilliant", 
+      "intelligent", "clever", "wise", 
       "sharp", "astute", "shrewd", "cunning", "ingenious"
     ] 
   },
@@ -121,7 +121,7 @@ export const dummySynonymsData = [
     word: "good", 
     synonyms: [
       "excellent", "great", "wonderful", "fantastic", "superb", 
-      "outstanding", "marvelous", "terrific", "amazing", "brilliant"
+      "outstanding", "marvelous", "terrific", "amazing"
     ] 
   },
   
@@ -192,7 +192,7 @@ export const dummySynonymsData = [
   { 
     word: "bright", 
     synonyms: [
-      "luminous", "radiant", "brilliant", "shining", "glowing", 
+      "luminous", "radiant", "shining", "glowing", 
       "sparkling", "gleaming", "dazzling", "vivid", "vibrant"
     ] 
   },

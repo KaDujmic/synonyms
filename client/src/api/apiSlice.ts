@@ -11,13 +11,13 @@ export const apiSlice = createApi({
     baseUrl: 'http://localhost:3000/synonym',
     credentials: 'include'
   }),
-  tagTypes: ['Synonyms'],
+  tagTypes: ['Synonyms', 'Synonym'],
   endpoints: (builder) => ({
     // GET /synonym/:searchTerm - Get synonyms for a specific word
     getSynonym: builder.query<GetSynonymResponse, string | undefined>({
       query: (searchTerm) => `/${searchTerm}`,
       providesTags: (result, _, searchTerm) => 
-        result ? [{ type: 'Synonyms', id: searchTerm }] : []
+        result ? [{ type: 'Synonym', id: searchTerm }] : []
     }),
 
     // GET /synonym/search/:searchTerm - Search synonyms starting with prefix
@@ -34,6 +34,17 @@ export const apiSlice = createApi({
         method: 'POST',
         body
       }),
+      async onQueryStarted({ word }, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          
+          // Force a refetch of the getSynonym query for this word
+          dispatch(apiSlice.util.invalidateTags([{ type: 'Synonyms', id: word }]));
+        } catch (error) {
+          // Handle error implementation
+          console.error('Failed to update getSynonym cache:', error);
+        }
+      },
       invalidatesTags: ['Synonyms']
     }),
 
@@ -69,6 +80,7 @@ export const apiSlice = createApi({
 // Export hooks for usage in components
 export const {
   useGetSynonymQuery,
+  useLazyGetSynonymQuery,
   useSearchSynonymsQuery,
   useLazySearchSynonymsQuery,
   useCreateSynonymMutation,
