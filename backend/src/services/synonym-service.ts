@@ -29,13 +29,13 @@ class SynonymService {
     for (const synonym of synonyms) {
       const normalizedSynonym = synonym.toLowerCase();
       const synonymSynonyms = this.synonyms.get(normalizedSynonym);
+      
       if (synonymSynonyms) {
-        Array.from(synonymSynonyms).forEach(synonym => allSynonymsSet.add(synonym));
+        synonymSynonyms.forEach(synonym => allSynonymsSet.add(synonym));
       }
     }
     
-    const allWords = [word, ...Array.from(allSynonymsSet)];
-    this.createRelationshipsBetweenWords(allWords);
+    this.createRelationshipsBetweenWords([word, ...allSynonymsSet]);
   }
 
   /**
@@ -49,9 +49,8 @@ class SynonymService {
     const normalizedWord = word.toLowerCase();
     
     const existingSynonyms = this.synonyms.get(normalizedWord) || new Set();
-    const existingSynonymsArray = Array.from(existingSynonyms);
     
-    const allSynonyms = [...existingSynonymsArray, ...synonyms];    
+    const allSynonyms = [...existingSynonyms, ...synonyms];    
     const allWords = [word, ...allSynonyms];
 
     const normalizedWords = allWords.map(w => {
@@ -95,10 +94,7 @@ class SynonymService {
     
     if (!result) return null;
     
-    return Array.from(result).map(synonym => ({
-      word: this.caseMapping.get(synonym) || synonym,
-      slug: synonym
-    }));
+    return this.convertSynonymsSetToArray(result);
   }
 
   /**
@@ -129,14 +125,12 @@ class SynonymService {
    * @returns A random synonym object with word and slug, or null if no words exist
    */
   public getRandomSynonym(): Synonym | null {
-    const allWords = Array.from(this.caseMapping.entries());
-    
-    if (allWords.length === 0) {
+    if (this.caseMapping.size === 0) {
       return null;
     }
     
-    const randomIndex = Math.floor(Math.random() * allWords.length);
-    const [lowercaseWord, originalWord] = allWords[randomIndex];
+    const randomIndex = Math.floor(Math.random() * this.caseMapping.size);
+    const [lowercaseWord, originalWord] = Array.from(this.caseMapping.entries())[randomIndex];
     
     return {
       word: originalWord,
@@ -147,13 +141,19 @@ class SynonymService {
 
 
   private convertSynonymsSetToArray(synonyms: Set<string>): Synonym[] {
-    return Array.from(synonyms).map(synonym => ({
-      word: this.caseMapping.get(synonym) || synonym,
-      slug: synonym
-    }));
+    const synonymsArray: Synonym[] = [];
+
+    synonyms.forEach(synonym => {
+      synonymsArray.push({
+        word: this.caseMapping.get(synonym) || synonym,
+        slug: synonym
+      });
+    });
+
+    return synonymsArray;
   }
 
-  private createRelationshipsBetweenWords(words: string[]): void {
+  private createRelationshipsBetweenWords(words: Set<string> | string[]): void {
     words.forEach(word1 => {
       if (!this.synonyms.has(word1.toLowerCase())) {
         this.synonyms.set(word1.toLowerCase(), new Set());
@@ -169,20 +169,19 @@ class SynonymService {
   }
 
   private filterMatchingWords(normalizedSearchTerm: string, normalizedWord: string): Synonym[] {
-    const matchingWords = Array.from(this.caseMapping.entries())
-    .filter(([lowercaseWord]) => 
-      lowercaseWord.startsWith(normalizedSearchTerm) && 
-      lowercaseWord !== normalizedWord
-    )
-    .map(([lowercaseWord, originalWord]) => ({
-      word: originalWord,
-      slug: lowercaseWord
-    }));
+    const matchingWords: Synonym[] = [];
+    
+    this.caseMapping.forEach(([lowercaseWord, originalWord]) => {
+      if (lowercaseWord.startsWith(normalizedSearchTerm) && lowercaseWord !== normalizedWord) {
+        matchingWords.push({
+          word: originalWord,
+          slug: lowercaseWord
+        });
+      }
+    });
 
     return matchingWords;
   }
-
-  
 }
 
 export default new SynonymService();
