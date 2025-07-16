@@ -22,7 +22,7 @@ class SynonymService {
   }
 
   public createWord(word: string, synonyms: string[]): void {
-    const allSynonymsSet = new Set<string>();
+    let allSynonymsSet = new Set<string>();
 
     synonyms.forEach(synonym => allSynonymsSet.add(synonym.toLowerCase()));
         
@@ -31,11 +31,12 @@ class SynonymService {
       const synonymSynonyms = this.synonyms.get(normalizedSynonym);
       
       if (synonymSynonyms) {
-        synonymSynonyms.forEach(synonym => allSynonymsSet.add(synonym));
+        allSynonymsSet = allSynonymsSet.union(synonymSynonyms);
       }
     }
     
-    this.createRelationshipsBetweenWords([word, ...allSynonymsSet]);
+    allSynonymsSet.add(word);
+    this.createRelationshipsBetweenWords(allSynonymsSet);
   }
 
   /**
@@ -59,7 +60,7 @@ class SynonymService {
       return normalized;
     });
 
-    this.createRelationshipsBetweenWords(normalizedWords);
+    this.createRelationshipsBetweenWords(new Set(normalizedWords));
   }
 
     /**
@@ -153,18 +154,17 @@ class SynonymService {
     return synonymsArray;
   }
 
-  private createRelationshipsBetweenWords(words: Set<string> | string[]): void {
-    words.forEach(word1 => {
-      if (!this.synonyms.has(word1.toLowerCase())) {
-        this.synonyms.set(word1.toLowerCase(), new Set());
-        this.caseMapping.set(word1.toLowerCase(), word1);
+  private createRelationshipsBetweenWords(words: Set<string>): void {
+    words.forEach(word => {
+      const normalizedWord = word.toLowerCase();
+      const currentSynonyms = this.synonyms.get(normalizedWord)!;
+      
+      if (currentSynonyms) {
+        this.synonyms.set(normalizedWord, currentSynonyms.union(words))  
+      } else {
+        this.caseMapping.set(normalizedWord, word);
+        this.synonyms.set(normalizedWord, words)
       }
-
-      words.forEach(word2 => {
-        if (word1 !== word2 && !this.synonyms.get(word1.toLowerCase())?.has(word2.toLowerCase())) {
-          this.synonyms.get(word1.toLowerCase())?.add(word2.toLowerCase());
-        }
-      });
     });
   }
 
