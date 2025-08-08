@@ -33,10 +33,11 @@ struct CustomButton: View {
                 if isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: foregroundColor))
+                } else {
+                    Text(title)
+                        .fontWeight(.medium)
+                        .foregroundColor(foregroundColor)
                 }
-                Text(isLoading ? "Loading..." : title)
-                    .fontWeight(.medium)
-                    .foregroundColor(foregroundColor)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 11)
