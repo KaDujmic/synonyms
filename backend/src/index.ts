@@ -6,7 +6,7 @@ import { errorMiddleware } from "./middleware";
 
 const app: Express = express();
 
-const port = 3000;
+const port = 3001;
 
 // CORS configuration
 app.use(cors({

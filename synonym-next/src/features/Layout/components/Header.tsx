@@ -1,6 +1,8 @@
 'use client';
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { SearchBar } from "@/features/SearchBar/components/SearchBar";
 
 /**
  * Header component for the application
@@ -10,10 +12,14 @@ import Link from "next/link";
  * - Brand logo that links to home
  * - Create Synonym button
  * - Responsive design
+ * - Conditional SearchBar (hidden on homepage)
  * 
  * @returns Header component
  */
 export const Header = () => {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
     <nav className="bg-white backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,6 +29,13 @@ export const Header = () => {
               SynonymHub
             </Link>
           </div>
+
+          {!isHomePage && (
+            <div className="py-2 w-full max-w-2xl">
+              <SearchBar />
+            </div>
+          )}
+
           <div className="flex items-center space-x-4">
             <Link 
               href="/create" 

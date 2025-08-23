@@ -44,19 +44,16 @@ export const Button = ({
   
   // State classes
   const disabledClasses = disabled ? 'cursor-not-allowed opacity-60' : '';
-  const loadingClasses = loading ? 'pointer-events-none' : '';
 
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled || loading}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${loadingClasses} ${className}`}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`}
     >
       {loading && (
-        <div className="inline-block w-4 h-4 border-2 border-transparent border-t-current rounded-full animate-spin">
-          <div className="w-full h-full"></div>
-        </div>
+        <div className="absolute inline-block w-6 h-6 border-2 border-transparent border-t-current rounded-full animate-spin"/>
       )}
       <span className={loading ? 'opacity-0' : ''}>
         {children}

@@ -1,6 +1,7 @@
 'use client';
 
 import { Synonym } from '@/types/Synonym.type';
+import Link from 'next/link';
 
 interface SearchResultsProps {
   setFocused: (focused: boolean) => void;
@@ -14,17 +15,12 @@ interface SearchResultsProps {
 export const SearchResults = (props: SearchResultsProps) => {
   const { 
     setFocused,
-    results,
     setSearchTerm,
+    results,
     searchTerm,
     isLoading,
     isFocused
   } = props;
-
-  const handleResultClick = (word: string) => {
-    setSearchTerm(word);
-    setFocused(false);
-  };
 
   if (isLoading && isFocused) {
     return (
@@ -50,14 +46,18 @@ export const SearchResults = (props: SearchResultsProps) => {
   return (
     <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto mt-1">
       {results.map((synonym) => (
-        <div
+        <Link
           key={synonym.slug}
           className="flex items-center justify-between p-3 cursor-pointer transition-colors duration-150 border-b border-gray-100 last:border-b-0 hover:bg-gray-50"
-          onClick={() => handleResultClick(synonym.word)}
+          href={`/synonym/${synonym.slug}`}
+          onClick={() => {
+            setSearchTerm(synonym.word);
+            setFocused(false);
+          }}
         >
           <span className="font-medium text-gray-900">{synonym.word}</span>
           <span className="text-xs text-gray-500 font-mono">/{synonym.slug}</span>
-        </div>
+        </Link>
       ))}
     </div>
   );
